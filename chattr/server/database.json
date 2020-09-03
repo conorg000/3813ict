@@ -90,25 +90,72 @@
         {
             "groupname": "Software Eng Students",
             "rooms": [
-                "Random",
-                "Projects"
+                {
+                    "roomname":"Random",
+                    "history" : [
+                        ["conorg", "Hi everyone! Made this chat so we can talk about SoftEng subjects/projects"],
+                        ["conorg", "Random chat is for random chat (it's in the name)"],
+                        ["conorg", "Projects chat is for talking about specific projects etc."],
+                        ["elainebenes", "Sweet, can you add me to Projects room pls?"]
+                    ]
+                },
+                {
+                    "roomname":"Projects",
+                    "history" : [
+                        ["conorg", "Room for talking about projects, assignments, ideas..."],
+                        ["elainebenes", "Thanks Conor!"]
+                    ]
+                }
             ],
             "groupassis": []
         },
         {
             "groupname": "Tiny homes",
             "rooms": [
-                "General",
-                "Buy/Sell",
-                "Find land"
+                {
+                    "roomname":"General",
+                    "history" : [
+                        ["conorg", "Welcome to Tiny homes general room"],
+                        ["conorg", "Elaine is one of our group assistants"],
+                        ["elainebenes", "Hellooooo"],
+                        ["costanza23", "Howsitgoin? Is there a chat/room for buying and selling?"],
+                        ["costanza23", "i wanna buy a tiny home"]
+                    ]
+                },
+                {
+                    "roomname":"Buy/Sell",
+                    "history" : [
+                        ["conorg", "This is a buy/sell room"]
+                    ]
+                },
+                {
+                    "roomname":"Find land",
+                    "history" : [
+                        []
+                    ]
+                }
             ],
             "groupassis": ["elainebenes"]
         },
         {
             "groupname": "Architects",
             "rooms": [
-                "Banter",
-                "Cool designs"
+                {
+                    "roomname":"Banter",
+                    "history" : [
+                        ["conorg", "Let me know if you want to be added to Cool Designs chat"],
+                        ["costanza23", "yea that'd be great!"]
+                    ]
+                },
+                {
+                    "roomname":"Cool designs",
+                    "history" : [
+                        ["costanza23", "Alright cheers"],
+                        ["costanza23", "Came across a cool gothic cathedral today - will send pics through"],
+                        ["conorg", "nice!"]
+                    ]
+                }
+                
             ],
             "groupassis": []
         }

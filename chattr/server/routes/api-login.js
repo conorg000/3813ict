@@ -49,4 +49,13 @@ module.exports = function(app){
         console.log(userdata);
         res.send(userdata);
     });
+
+    app.post('/api/groupdata', function(req, res){
+        let jsonData = fs.readFileSync(path.join(__dirname, '../database.json'),'utf-8');
+        let database = JSON.parse(jsonData);
+        // Loop through accounts
+        let groupdata = database.groups;
+        console.log(groupdata);
+        res.send(groupdata);
+    });
 }

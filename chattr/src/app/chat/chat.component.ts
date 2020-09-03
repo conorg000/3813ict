@@ -12,7 +12,11 @@ export class ChatComponent implements OnInit {
   currentUser:User;
   username:string = "";
   role:string = "";
+  usergroups:any;
   groups:any;
+  chosenchat:any = [];
+  //room:string;
+
 
   constructor(private router: Router, private authservice: AuthService) { }
 
@@ -22,7 +26,8 @@ export class ChatComponent implements OnInit {
       if(this.currentUser){
         this.username = this.currentUser.username;
         this.role = this.currentUser.role;
-        this.usergroups();
+        this.userGroups();
+        this.groupData();
       }
     }
     catch(err){
@@ -31,19 +36,35 @@ export class ChatComponent implements OnInit {
     }
   }
 
-  usergroups(){
+  userGroups(){
     this.authservice.userData(this.username).subscribe(
+      data=>{
+        this.usergroups = data;
+      })
+  }
+
+  groupData(){
+    this.authservice.groupData().subscribe(
       data=>{
         this.groups = data;
       })
-    console.log(this.groups);
   }
-
-  seeChat(rooom){
-    
+  
+  seeChat(room, groupname){
+    for (let i=0; i < this.groups.length; i++){
+      if (groupname == this.groups[i].groupname){
+        for (let j=0; j < this.groups[i].rooms.length; j++){
+          if (room == this.groups[i].rooms[j].roomname){
+            this.chosenchat = this.groups[i].rooms[j];
+            if (this.chosenchat.history[0] == []){
+              this.chosenchat.history = '';
+            }
+            console.log(this.chosenchat);
+          }
+        }
+      }
+    } 
   }
-
-
 
 
 
