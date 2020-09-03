@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
     this.authservice.login(this.email, this.pwd).subscribe(
       data=>{
         if (data.valid == true){
-          this.newuser = new User(data.email, data.username);
+          this.newuser = new User(data.email, data.username, data.role);
           //console.log(data);
           sessionStorage.setItem('currentUser', JSON.stringify(this.newuser));
           this.router.navigate(['/account']);

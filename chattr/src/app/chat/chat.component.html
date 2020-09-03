@@ -1,7 +1,16 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<h1>Chat</h1>
+<div>
+    <h1>Your Groups and Rooms</h1>
+    <p>Click a room to see the chat</p>
+    <ng-container *ngFor="let group of groups">
+        <h3>{{ group.groupname }}</h3>
+        <ul>
+            <li *ngFor="let room of group.rooms" (click)="seeChat(room)">{{ room }}</li>
+        </ul>
+    </ng-container>
+</div>
 <form>
     <input type="text" id="message" class="fadeIn second" name="message" placeholder="Type here!">
     <input type="submit" class="fadeIn fourth" value="Send">

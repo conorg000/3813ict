@@ -20,16 +20,33 @@ module.exports = function(app){
         customer.email = '';
         customer.username = '';
         customer.pwd = '';
+        customer.role = '';
         customer.valid = false;
         // Loop through accounts
         for (let i=0; i < users.length; i++){
             if (req.body.email == users[i].email && req.body.pwd == users[i].pwd){
                 customer.email = users[i].email;
                 customer.username = users[i].username;
+                customer.role = users[i].role;
                 customer.valid = true;
             }
         }
         //console.log(customer);
         res.send(customer);
+    });
+
+    app.post('/api/userdata', function(req, res){
+        let jsonData = fs.readFileSync(path.join(__dirname, '../database.json'),'utf-8');
+        let database = JSON.parse(jsonData);
+        console.log(req.body.username);
+        // Loop through accounts
+        let userdata = {};
+        for (let i=0; i < database.users.length; i++){
+            if (req.body.username == database.users[i].username){
+                userdata = database.users[i].groups;
+            }
+        }
+        console.log(userdata);
+        res.send(userdata);
     });
 }
