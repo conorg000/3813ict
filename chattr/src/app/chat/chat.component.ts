@@ -8,11 +8,22 @@ import { User } from '../user';
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
+  currentUser:User;
+  username:string = "";
 
   constructor(private router: Router) { }
 
-  ngOnInit() {;
-    //console.log(this.currentUser);
+  ngOnInit() {
+    try {
+      this.currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+      if(this.currentUser){
+        this.username = this.currentUser.username;
+      }
+    }
+    catch(err){
+      console.log("Not logged in");
+      this.router.navigateByUrl('/login');
+    }
   }
 
 }

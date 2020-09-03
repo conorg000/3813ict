@@ -3,15 +3,12 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <nav class="navbar navbar-default">
   <div class="container-fluid">
-  <ul class="nav navbar-nav">
-  <li>
-    <a class="nav-link" *ngIf="username != ''; else other_content"><button (click) = signOut()>Log Out</button></a>
-    <ng-template #other_content><a class="nav-link" routerLink="/login">Login</a></ng-template>
-  </li>
-  <li class="active"><a class="nav-link" routerLink="/">Home</a></li>
-  <li><a class="nav-link" routerLink="/chat">Chat</a></li>
-  <li><a class="nav-link" routerLink="/account">Account</a></li>
-  </ul>
+    <ul class="nav navbar-nav">
+      <li *ngIf="username != ''; else other_content"><button (click) = signOut()>Log Out</button></li>
+      <ng-template #other_content><a class="nav-link" routerLink="/login">Login</a></ng-template>
+      <li><a class="nav-link" routerLink="/chat">Chat</a></li>
+      <li><a class="nav-link" routerLink="/account">Account</a></li>
+    </ul>
   </div>
 </nav>
 <div class="container">

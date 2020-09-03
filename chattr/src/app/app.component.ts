@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from './user';
 
@@ -15,17 +15,24 @@ export class AppComponent implements OnInit {
   age:number = 0;
   email:string = '';
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
-    this.currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
-    //console.log(this.currentUser);
-    if(this.currentUser){
-      this.email = this.currentUser.email;
-      this.username = this.currentUser.username;
-      this.birthdate = this.currentUser.birthdate;
-      this.age = this.currentUser.age;
+    try {
+      this.currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+      if(this.currentUser){
+        this.email = this.currentUser.email;
+        this.username = this.currentUser.username;
+        this.birthdate = this.currentUser.birthdate;
+        this.age = this.currentUser.age;
+      }
     }
+    catch(err){
+      console.log("Not logged in");
+    }
+  }
+
+  ngOnChanges() {
     
   }
 

@@ -17,18 +17,23 @@ export class AccountComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit(){
-    this.currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
-    //console.log(this.currentUser);
-    if(this.currentUser){
-      this.email = this.currentUser.email;
-      this.username = this.currentUser.username;
-      this.birthdate = this.currentUser.birthdate;
-      this.age = this.currentUser.age;
+    try {
+      this.currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+      if(this.currentUser){
+        this.email = this.currentUser.email;
+        this.username = this.currentUser.username;
+        this.birthdate = this.currentUser.birthdate;
+        this.age = this.currentUser.age;
+      }
+    }
+    catch(err){
+      console.log("Not logged in");
+      this.router.navigateByUrl('/login');
     }
   }
 
   nav(){
-    this.router.navigateByUrl('/account')
+    this.router.navigateByUrl('/account');
   }
 
 }

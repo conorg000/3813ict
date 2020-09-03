@@ -1,0 +1,116 @@
+{
+    "users": [
+        {
+            "username": "conorg",
+            "email": "conorgould@gmail.com",
+            "id": 0,
+            "pwd": "me",
+            "role": "superadmin",
+            "groups": [
+                {
+                    "groupname": "Software Eng Students",
+                    "rooms": [
+                        "Random",
+                        "Projects"
+                    ]
+                },
+                {
+                    "groupname": "Tiny homes",
+                    "rooms": [
+                        "General",
+                        "Buy/Sell",
+                        "Find land"
+                    ]
+                },
+                {
+                    "groupname": "Architects",
+                    "rooms": [
+                        "Banter",
+                        "Cool designs"
+                    ]
+                }
+            ]
+        },
+        {
+            "username": "costanza23",
+            "email": "g.constanza@gmail.com",
+            "id": 1,
+            "pwd": "pastrami",
+            "role": "groupadmin",
+            "groups": [
+                {
+                    "groupname": "Architects",
+                    "rooms": [
+                        "Banter",
+                        "Cool designs"
+                    ]
+                },
+                {
+                    "groupname": "Tiny homes",
+                    "rooms": [
+                        "General"
+                    ]
+                }
+            ]
+        },
+        {
+            "username": "elainebenes",
+            "email": "benes.e@yahoo.com",
+            "id": 2,
+            "pwd": "soup",
+            "role": "",
+            "groups": [
+                {
+                    "groupname": "Tiny homes",
+                    "rooms": [
+                        "General",
+                        "Buy/Sell",
+                        "Find land"
+                    ]
+                },
+                {
+                    "groupname": "Software Eng Students",
+                    "rooms": [
+                        "Random",
+                        "Projects"
+                    ]
+                }
+            ]
+        },
+        {
+            "username": "notASIO",
+            "email": "spy@asio.com.au",
+            "id": 4,
+            "pwd": "spyvsspy",
+            "role": "",
+            "groups": []
+        }
+    ],
+    "groups": [
+        {
+            "groupname": "Software Eng Students",
+            "rooms": [
+                "Random",
+                "Projects"
+            ],
+            "groupassis": []
+        },
+        {
+            "groupname": "Tiny homes",
+            "rooms": [
+                "General",
+                "Buy/Sell",
+                "Find land"
+            ],
+            "groupassis": ["elainebenes"]
+        },
+        {
+            "groupname": "Architects",
+            "rooms": [
+                "Banter",
+                "Cool designs"
+            ],
+            "groupassis": []
+        }
+    ]
+}
