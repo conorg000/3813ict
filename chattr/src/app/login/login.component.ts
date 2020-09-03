@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
   pwd:string = "";
   errormsg = "";
   newuser:User;
+  currentUser:User;
 
   constructor(private router: Router, private authservice: AuthService) { }
 
@@ -20,16 +21,18 @@ export class LoginComponent implements OnInit {
   }
 
   itemClicked() {
+    //console.log(this.email);
     //let data = this.http.post<User>('http://localhost:3000/api/auth', { email: this.userEmail, pwd: this.userPw });
     this.authservice.login(this.email, this.pwd).subscribe(
       data=>{
         if (data.valid == true){
-          this.newuser = new User(data.username, data.birthdate, data.age, data.email);
+          this.newuser = new User(data.email, data.birthdate, data.age, data.username);
+          //console.log(data);
           sessionStorage.setItem('currentUser', JSON.stringify(this.newuser));
           this.router.navigate(['/account']);
         }
         else{
-          this.errormsg = "Error: incorrect email or password";
+          alert("Error: incorrect email or password");
         }
       },
       error=>{

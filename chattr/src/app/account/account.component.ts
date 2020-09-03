@@ -17,8 +17,8 @@ export class AccountComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit(){
-
     this.currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+    //console.log(this.currentUser);
     if(this.currentUser){
       this.email = this.currentUser.email;
       this.username = this.currentUser.username;
