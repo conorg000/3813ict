@@ -11,8 +11,6 @@ export class AppComponent implements OnInit {
   title = 'chattr';
   currentUser:User;
   username:string = "";
-  birthdate:string = "";
-  age:number = 0;
   email:string = '';
 
   constructor(private router: Router, private cdr: ChangeDetectorRef) { }
@@ -23,8 +21,6 @@ export class AppComponent implements OnInit {
       if(this.currentUser){
         this.email = this.currentUser.email;
         this.username = this.currentUser.username;
-        this.birthdate = this.currentUser.birthdate;
-        this.age = this.currentUser.age;
       }
     }
     catch(err){

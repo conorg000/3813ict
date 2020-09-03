@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 // Where to look for routes
 app.use(express.static(path.join(__dirname, '../dist/chattr/')));
 
-require('./routes/api-login.js')(app, path);
+require('./routes/api-login.js')(app);
 
 // Start server
 app.listen(3000, '127.0.0.1', function(){
