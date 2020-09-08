@@ -15,15 +15,15 @@
     <h3>Room chat: {{chosenchat.roomname}} </h3>
     <ul *ngIf="chosenchat.history != ''; else other">
         <li *ngFor="let msg of chosenchat.history">
-            {{ msg[0] }} : {{ msg[1] }}
+            {{ msg.user }} : {{ msg.message }}
         </li>
+        <form>
+            <input type="text" [(ngModel)]="message" id="message" class="fadeIn second" name="message" placeholder="Type here!">
+            <input type="submit" class="fadeIn fourth" value="Send" (click)="sendMsg()">
+        </form>
     </ul>
     <ng-template #other><li>Start chatting!</li></ng-template>
 </div>
-<form>
-    <input type="text" id="message" class="fadeIn second" name="message" placeholder="Type here!">
-    <input type="submit" class="fadeIn fourth" value="Send">
-</form>
 <div class="container">
     <router-outlet></router-outlet>
 </div>

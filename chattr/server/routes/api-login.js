@@ -58,4 +58,30 @@ module.exports = function(app){
         console.log(groupdata);
         res.send(groupdata);
     });
+
+    app.post('/api/sendmsg', function(req, res){
+        let jsonData = fs.readFileSync(path.join(__dirname, '../database.json'),'utf-8');
+        let database = JSON.parse(jsonData);
+        let status = {};
+        status.valid = false;
+        // Add message to group message history
+        console.log(req.body.username);
+        console.log(req.body.message);
+        console.log(req.body.group);
+        console.log(req.body.roomname);
+        for (let i=0; i < database.groups.length; i++){
+            if (database.groups[i].groupname == req.body.group){
+                for (let j=0; j < database.groups[i].rooms.length; j++){
+                    if (database.groups[i].rooms[j].roomname == req.body.roomname){
+                        database.groups[i].rooms[j].history.push({"user": req.body.username, "message": req.body.message});
+                        let towrite = JSON.stringify(database);
+                        console.log(towrite);
+                        fs.writeFileSync(path.join(__dirname, '../database.json'), towrite, 'utf-8');
+                        status.valid = true;
+                    }
+                }
+            }
+        }
+        res.send(status);
+    });
 }

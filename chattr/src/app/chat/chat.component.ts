@@ -15,6 +15,8 @@ export class ChatComponent implements OnInit {
   usergroups:any;
   groups:any;
   chosenchat:any = [];
+  chosengroup:string = "";
+  message:string = "";
   //room:string;
 
 
@@ -53,6 +55,7 @@ export class ChatComponent implements OnInit {
   seeChat(room, groupname){
     for (let i=0; i < this.groups.length; i++){
       if (groupname == this.groups[i].groupname){
+        this.chosengroup = this.groups[i].groupname;
         for (let j=0; j < this.groups[i].rooms.length; j++){
           if (room == this.groups[i].rooms[j].roomname){
             this.chosenchat = this.groups[i].rooms[j];
@@ -64,6 +67,23 @@ export class ChatComponent implements OnInit {
         }
       }
     } 
+  }
+
+  sendMsg(){
+    console.log(this.message);
+    if (this.chosengroup != ""){
+      this.authservice.sendMsg(this.username, this.message, this.chosengroup, this.chosenchat.roomname).subscribe(
+        (data: any)=>{
+          if (data.valid == true){
+            //window.location.reload();
+            this.seeChat(this.chosenchat.roomname, this.chosengroup);
+          }else{
+            alert("Somethign went wrong!");
+          }
+        })
+    }else{
+      console.log('No room selected');
+    }
   }
 
 

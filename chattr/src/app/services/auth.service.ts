@@ -12,6 +12,9 @@ export class AuthService {
   username:string;
   pwd:string;
   room:string;
+  message:string;
+  group:string;
+  roomname:string;
 
   constructor(private http:HttpClient) { }
 
@@ -25,5 +28,9 @@ export class AuthService {
 
   groupData(){
     return this.http.post('http://localhost:3000/api/groupdata', {});
+  }
+
+  sendMsg(username:string, message:string, group:string, roomname:string){
+    return this.http.post('http://localhost:3000/api/sendmsg', {username:username, message:message, group:group, roomname:roomname});
   }
 }
