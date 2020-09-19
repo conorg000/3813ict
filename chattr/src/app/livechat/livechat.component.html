@@ -1,0 +1,20 @@
+<h1>Live Chat</h1>
+<div>
+    <form>
+        <div>
+            <label for="messagecontent">Send a new message</label>
+            <input type="text" [(ngModel)]="messagecontent" name="messagecontent" id="messagecontent"/>
+        </div>
+        <div>
+            <button (click)="chat(messagecontent)" class="btn btn-primary">Send</button>
+        </div>
+    </form>
+    <h2>Messages</h2>
+    <ul>
+        <li *ngFor="let message of messages">{{message}}</li>
+    </ul>
+
+</div>
+<div class="container">
+    <router-outlet></router-outlet>
+</div>

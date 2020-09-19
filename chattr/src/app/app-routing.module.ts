@@ -4,11 +4,13 @@ import { LoginComponent } from './login/login.component';
 import { AccountComponent } from './account/account.component';
 import { FormsModule } from '@angular/forms';
 import { ChatComponent } from './chat/chat.component';
+import { LivechatComponent } from './livechat/livechat.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'account', component:AccountComponent},
-  {path: 'chat', component: ChatComponent}
+  {path: 'chat', component: ChatComponent},
+  {path: 'livechat', component:LivechatComponent}
 ];
 
 @NgModule({

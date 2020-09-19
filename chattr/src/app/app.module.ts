@@ -7,13 +7,17 @@ import { LoginComponent } from './login/login.component';
 import { AccountComponent } from './account/account.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ChatComponent } from './chat/chat.component';
+import { LivechatComponent } from './livechat/livechat.component';
+import { SocketService } from './services/socket.service';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     AccountComponent,
-    ChatComponent
+    ChatComponent,
+    LivechatComponent
   ],
   imports: [
     BrowserModule,
@@ -21,7 +25,7 @@ import { ChatComponent } from './chat/chat.component';
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [SocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
