@@ -33,4 +33,18 @@ export class AuthService {
   sendMsg(username:string, message:string, group:string, roomname:string){
     return this.http.post('http://localhost:3000/api/sendmsg', {username:username, message:message, group:group, roomname:roomname});
   }
+
+  // New routes for MongoDB
+  addUser(user:User){
+    return this.http.post<any>('http://localhost:3000/api/adduser', user);
+  }
+
+  getUsers(){
+    return this.http.get<any>('http://localhost:3000/api/getusers');
+  }
+
+  deleteUser(userid:number){
+    console.log("DELETING " + userid);
+    return this.http.post<any>('http://localhost:3000/api/deleteuser', userid);
+  }
 }

@@ -10,6 +10,7 @@ import { ChatComponent } from './chat/chat.component';
 import { LivechatComponent } from './livechat/livechat.component';
 import { SocketService } from './services/socket.service';
 import { CommonModule } from '@angular/common';
+import { ManageComponent } from './manage/manage.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { CommonModule } from '@angular/common';
     LoginComponent,
     AccountComponent,
     ChatComponent,
-    LivechatComponent
+    LivechatComponent,
+    ManageComponent
   ],
   imports: [
     BrowserModule,

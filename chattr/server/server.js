@@ -5,7 +5,7 @@ const path = require('path');
 const http = require('http').Server(app);
 const cors = require('cors');
 const MongoClient = require('mongodb').MongoClient;
-// Object ID?
+var ObjectID = require('mongodb').ObjectID;
 const io = require('socket.io')(http);
 const sockets = require('./socket.js');
 const server = require('./listen.js');
@@ -48,8 +48,9 @@ MongoClient.connect(url, {poolSize:10, useNewUrlParser: true, useUnifiedTopology
     if (err) {return console.log(err)}
         const dbName = 'mydb';
         const db = client.db(dbName);
-        // require('./routes/api-add.js')(db,app,path);
-        // require('./routes/api-getlist.js')(db,app,path);
+        require('./routes/api-adduser.js')(db,app,path);
+        require('./routes/api-getusers.js')(db,app,path);
+        require('./routes/api-deleteuser.js')(db,app,path);
         // require('./routes/api-getitem.js')(db,app,ObjectID);
         // require('./routes/api-update.js')(db,app,ObjectID);
         // require('./routes/api-deleteitem.js')(db,app,ObjectID);

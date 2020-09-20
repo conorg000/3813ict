@@ -5,16 +5,18 @@ import { AccountComponent } from './account/account.component';
 import { FormsModule } from '@angular/forms';
 import { ChatComponent } from './chat/chat.component';
 import { LivechatComponent } from './livechat/livechat.component';
+import { ManageComponent } from './manage/manage.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'account', component:AccountComponent},
   {path: 'chat', component: ChatComponent},
-  {path: 'livechat', component:LivechatComponent}
+  {path: 'livechat', component:LivechatComponent},
+  {path: 'manage', component:ManageComponent}
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {enableTracing: true})], //,
+  imports: [RouterModule.forRoot(routes, {enableTracing: true})],
   exports: [RouterModule, FormsModule]
 })
 export class AppRoutingModule { }
