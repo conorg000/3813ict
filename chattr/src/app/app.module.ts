@@ -11,6 +11,7 @@ import { LivechatComponent } from './livechat/livechat.component';
 import { SocketService } from './services/socket.service';
 import { CommonModule } from '@angular/common';
 import { ManageComponent } from './manage/manage.component';
+import { UpdateComponent } from './update/update.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { ManageComponent } from './manage/manage.component';
     AccountComponent,
     ChatComponent,
     LivechatComponent,
-    ManageComponent
+    ManageComponent,
+    UpdateComponent
   ],
   imports: [
     BrowserModule,

@@ -51,6 +51,7 @@ MongoClient.connect(url, {poolSize:10, useNewUrlParser: true, useUnifiedTopology
         require('./routes/api-adduser.js')(db,app,path);
         require('./routes/api-getusers.js')(db,app,path);
         require('./routes/api-deleteuser.js')(db,app,path);
+        require('./routes/api-updateuser.js')(db,app,path);
         // require('./routes/api-getitem.js')(db,app,ObjectID);
         // require('./routes/api-update.js')(db,app,ObjectID);
         // require('./routes/api-deleteitem.js')(db,app,ObjectID);

@@ -1,0 +1,24 @@
+<div>
+    <h3>Update user</h3>
+    <form (submit)="editUser($event)">
+    <div>
+        <label for="userid">User Name</label>
+        <input type="text" class="form-control" id="username" [(ngModel)]="username" name="username" placeholder="{{userOrigin.username}}">
+    </div>
+    <div>
+        <label for="userid">Email</label>
+        <textarea class="form-control" id="useremail" [(ngModel)]="useremail" name="useremail" placeholder="{{userOrigin.email}}"></textarea>
+    </div>
+    <div>
+        <label for="userid">Role</label>
+        <input type="text" class="form-control" id="userrole" [(ngModel)]="userrole" name="userrole" placeholder="{{userOrigin.role}}">
+    </div>
+    <div>
+        <label for="userid">Password</label>
+        <input type="text" class="form-control" id="userpwd" [(ngModel)]="userpwd" name="userpwd" placeholder="{{userOrigin.pwd}}">
+    </div>
+    <div>
+        <button type="submit" class="btn btn-primary"><i class="fa fa-plus-square"></i>Update User</button>
+    </div>
+    </form>
+</div>

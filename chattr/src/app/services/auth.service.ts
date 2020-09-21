@@ -47,4 +47,8 @@ export class AuthService {
     console.log("DELETING " + userid);
     return this.http.post<any>('http://localhost:3000/api/deleteuser', userid);
   }
+
+  updateUser(user){
+    return this.http.post<any>('http://localhost:3000/api/updateuser', user);
+  }
 }
