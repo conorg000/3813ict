@@ -43,9 +43,9 @@ export class AuthService {
     return this.http.get<any>('http://localhost:3000/api/getusers');
   }
 
-  deleteUser(userid:number){
-    console.log("DELETING " + userid);
-    return this.http.post<any>('http://localhost:3000/api/deleteuser', userid);
+  deleteUser(user:User){
+    console.log("DELETING " + user.id);
+    return this.http.post<any>('http://localhost:3000/api/deleteuser', user);
   }
 
   updateUser(user){

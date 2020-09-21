@@ -7,9 +7,9 @@ module.exports = function(db, app, ObjectID){
         user = req.body;
         //var objectid = new ObjectID(product.objid);
         const collection = db.collection('users');
-        collection.updateOne({id:user.id}, {$set:{email:user.email, username:user.username, role:user.role, pwd:user.pwd}},()=>{
-            res.send({'ok':user.objid});
-        })
+        collection.updateOne({id:user.id}, {$set:{email:user.email, username:user.username, role:user.role, pwd:user.pwd}},(data)=>{
+            res.send(data);
+        });
     });
 }
 

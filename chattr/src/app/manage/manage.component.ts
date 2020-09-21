@@ -35,7 +35,9 @@ export class ManageComponent implements OnInit {
   // Delete user from DB
   deleteUser(user:User){
     console.log('Deleting User with id ' + user.id);
-    this.authservice.deleteUser(user.id);
+    this.authservice.deleteUser(user).subscribe((data)=>{
+      console.log(data);
+    });
   }
   
   // Re-route to update page and edit user
