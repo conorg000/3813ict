@@ -134,4 +134,9 @@ export class ManageComponent implements OnInit {
 
   }
 
+  // Add a user to a group
+  addUserGroup(group:Group){
+
+  }
+
 }

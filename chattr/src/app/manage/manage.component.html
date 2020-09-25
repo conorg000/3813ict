@@ -58,6 +58,7 @@
                 <tr>
                     <td>Name</td>
                     <td>Rooms</td>
+                    <td>Members</td>
                     <td>Manage</td>
                     <td></td>
                     <td></td>
@@ -72,6 +73,7 @@
                             <li>{{room}}</li><button (click)="deleteRoom(group, room)" class="btn btn-danger">Delete</button>
                         </ul>
                     </td>
+                    <td></td>
                     <td><button (click)="deleteGroup(group)" class="btn btn-danger">Delete</button></td>
                     <td><button (click)="editGroup(group)" class="btn btn-danger">Edit</button></td>
                     <td>
@@ -82,6 +84,21 @@
                             </div>
                             <div>
                                 <button type="submit" class="btn btn-primary"><i class="fa fa-plus-square"></i>Add Room</button>
+                            </div>
+                        </form>
+                    </td>
+                    <td>
+                        <form (submit)="addUserGroup(group)">
+                            <div>
+                                <label>Add User</label>
+                                <select [(ngModel)] = "users">
+                                    <option class="option" *ngFor="let user of users" [ngValue] = "user.username">
+                                        {{user.username}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div>
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-plus-square"></i>Add User</button>
                             </div>
                         </form>
                     </td>
