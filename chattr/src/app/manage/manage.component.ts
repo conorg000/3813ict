@@ -122,6 +122,13 @@ export class ManageComponent implements OnInit {
     });
   }
 
+  // Delete room
+  deleteRoom(group:Group, room:string){
+    this.authservice.deleteRoom(group, room).subscribe((data)=>{
+      console.log(data);
+    })
+  }
+
   // Edit group
   editGroup(event){
 

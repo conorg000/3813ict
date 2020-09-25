@@ -58,7 +58,10 @@
                 <tr>
                     <td>Name</td>
                     <td>Rooms</td>
-                    <td>Members</td>
+                    <td>Manage</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
             </thead>
             <tbody>
@@ -66,7 +69,7 @@
                     <td>{{ group.name}}</td>
                     <td>
                         <ul *ngFor="let room of group.rooms">
-                            <li>{{room}}</li>
+                            <li>{{room}}</li><button (click)="deleteRoom(group, room)" class="btn btn-danger">Delete</button>
                         </ul>
                     </td>
                     <td><button (click)="deleteGroup(group)" class="btn btn-danger">Delete</button></td>
@@ -80,15 +83,6 @@
                             <div>
                                 <button type="submit" class="btn btn-primary"><i class="fa fa-plus-square"></i>Add Room</button>
                             </div>
-                        </form>
-                    </td>
-                    <td>
-                        <form (submit)="deleteRoom(group, room)">
-                            <label>Choose room:</label>
-                            <select ngmodel="selectedRoom">
-                              <option ng-repeat="room in group.rooms" ng-value="{{room}}">{{ room }}</option>
-                            </select>
-                            <input type="submit" value="Delete">
                         </form>
                     </td>
                 </tr>
