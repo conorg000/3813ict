@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../user';
 import { AuthService } from '../services/auth.service';
+import { Group } from '../group';
 
 @Component({
   selector: 'app-manage',
@@ -17,13 +18,21 @@ export class ManageComponent implements OnInit {
   userpwd:string="";
   uservalid:boolean=null;
   newuser:User;
+  newgroup:Group;
+  groupname:string="";
+  grouprooms:any=[];
+  newroom:string="";
 
   constructor(private authservice:AuthService, private router:Router) { }
   users: User[];
+  groups:Group[];
 
   ngOnInit() {
+    this.getGroups();
     this.getUsers();
   }
+
+  // User functions
 
   // Retrieve users from MongDB
   getUsers(): void{
@@ -65,7 +74,57 @@ export class ManageComponent implements OnInit {
       this.userid = null;
       this.userpwd = "";
       this.uservalid = null;
+    });
+  }
+
+
+  // Group/channel functions
+  
+  // Retrieve groups and rooms
+  getGroups(): void{
+    this.authservice.getGroups().subscribe(data=>{
+      this.groups = data;
     })
+  }
+
+  // Add new group
+  addnewGroup(event){
+    event.preventDefault();
+    this.newgroup = new Group(this.groupname);
+    this.authservice.addGroup(this.newgroup).subscribe((data)=>{
+      console.log(data);
+      if(data.err == null){
+        console.log("added group");
+      }
+      this.groupname = "";
+    });
+  }
+
+  // Add room
+  addnewRoom(group:Group){
+    console.log(group.name);
+    console.log(group.rooms);
+    console.log(this.newroom);
+    this.authservice.addRoom(group, this.newroom).subscribe((data)=>{
+      console.log(data);
+      if(data.err == null){
+        console.log("added room");
+      }
+      this.newroom = "";
+    });
+  }
+
+  // Delete group
+  deleteGroup(group:Group){
+    console.log('Deleting group with name ' + group.name);
+    this.authservice.deleteGroup(group).subscribe((data)=>{
+      console.log(data);
+    });
+  }
+
+  // Edit group
+  editGroup(event){
+
   }
 
 }
