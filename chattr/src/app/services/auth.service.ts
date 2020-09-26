@@ -86,4 +86,8 @@ export class AuthService {
   removeUserGroup(group:Group, username:string){
     return this.http.post<any>('http://localhost:3000/api/removeusergroup', {group:group, username:username});
   }
+
+  removeUserRoom(room:Room, username:string){
+    return this.http.post<any>('http://localhost:3000/api/removeuserroom', {room:room, username:username});
+  }
 }

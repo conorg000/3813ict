@@ -154,7 +154,8 @@ export class ManageComponent implements OnInit {
   removeUserGroup(group:Group){
     this.authservice.removeUserGroup(group, this.selecteduser).subscribe((data)=>{
       console.log(data);
-    })
+    });
+    this.selecteduser = null;
   }
 
   // Add a groupmember to a room
@@ -167,6 +168,13 @@ export class ManageComponent implements OnInit {
       }
       this.selecteduser = null;
     });
+  }
+
+  removeUserRoom(room:Room){
+    this.authservice.removeUserRoom(room, this.selecteduser).subscribe((data)=>{
+      console.log(data);
+    });
+    this.selecteduser = null;
   }
 
 }

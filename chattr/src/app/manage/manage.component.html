@@ -86,6 +86,17 @@
                                     <button type="submit" class="btn btn-primary">Add User</button>
                                 </div>
                             </form>
+                            <form (submit)="removeUserRoom(room)">
+                                <div>
+                                    <label>Remove User</label>
+                                    <select [(ngModel)] = "selecteduser" id="selecteduser" name="selecteduser">
+                                        <option class="option" *ngFor="let user of group.groupmembers" [ngValue] = "user">
+                                            {{user}}
+                                        </option>
+                                    </select>
+                                    <button type="submit" class="btn btn-danger">Remove User</button>
+                                </div>
+                            </form>
                         </ul>
                     </td>
                     <td>
