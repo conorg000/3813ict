@@ -18,6 +18,7 @@ export class ManageComponent implements OnInit {
   userpwd:string="";
   uservalid:boolean=null;
   newuser:User;
+  selecteduser:string="";
   newgroup:Group;
   groupname:string="";
   grouprooms:any=[];
@@ -136,7 +137,14 @@ export class ManageComponent implements OnInit {
 
   // Add a user to a group
   addUserGroup(group:Group){
-
+    console.log(this.selecteduser);
+    this.authservice.addUserGroup(group, this.selecteduser).subscribe((data)=>{
+      console.log(data);
+      if(data.err == null){
+        console.log("added user to group");
+      }
+      this.selecteduser = null;
+    });
   }
 
 }

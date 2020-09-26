@@ -73,7 +73,11 @@
                             <li>{{room}}</li><button (click)="deleteRoom(group, room)" class="btn btn-danger">Delete</button>
                         </ul>
                     </td>
-                    <td></td>
+                    <td>
+                        <ul *ngFor="let member of group.groupmembers">
+                            <li>{{member}}</li>
+                        </ul>
+                    </td>
                     <td><button (click)="deleteGroup(group)" class="btn btn-danger">Delete</button></td>
                     <td><button (click)="editGroup(group)" class="btn btn-danger">Edit</button></td>
                     <td>
@@ -91,14 +95,25 @@
                         <form (submit)="addUserGroup(group)">
                             <div>
                                 <label>Add User</label>
-                                <select [(ngModel)] = "users">
+                                <select [(ngModel)] = "selecteduser" id="selecteduser" name="selecteduser">
                                     <option class="option" *ngFor="let user of users" [ngValue] = "user.username">
                                         {{user.username}}
                                     </option>
                                 </select>
+                                <button type="submit" class="btn btn-primary">Add User</button>
                             </div>
+                        </form>
+                    </td>
+                    <td>
+                        <form (submit)="removeUserGroup(group)">
                             <div>
-                                <button type="submit" class="btn btn-primary"><i class="fa fa-plus-square"></i>Add User</button>
+                                <label>Remove User (from group and all rooms)</label>
+                                <select [(ngModel)] = "selecteduser" id="selecteduser" name="selecteduser">
+                                    <option class="option" *ngFor="let user of users" [ngValue] = "user.username">
+                                        {{user.username}}
+                                    </option>
+                                </select>
+                                <button type="submit" class="btn btn-danger">Remove User</button>
                             </div>
                         </form>
                     </td>
