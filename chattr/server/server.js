@@ -58,6 +58,7 @@ MongoClient.connect(url, {poolSize:10, useNewUrlParser: true, useUnifiedTopology
         require('./routes/api-deletegroup.js')(db,app,path);
         require('./routes/api-deleteroom.js')(db,app,path);
         require('./routes/api-addusergroup.js')(db,app,path);
+        require('./routes/api-adduserroom.js')(db,app,path);
         // require('./routes/api-getitem.js')(db,app,ObjectID);
         // require('./routes/api-update.js')(db,app,ObjectID);
         // require('./routes/api-deleteitem.js')(db,app,ObjectID);

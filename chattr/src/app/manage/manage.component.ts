@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { User } from '../user';
 import { AuthService } from '../services/auth.service';
 import { Group } from '../group';
+import { Room } from '../room';
 
 @Component({
   selector: 'app-manage',
@@ -22,7 +23,8 @@ export class ManageComponent implements OnInit {
   newgroup:Group;
   groupname:string="";
   grouprooms:any=[];
-  newroom:string="";
+  newroomname:string="";
+  newroom:Room;
 
   constructor(private authservice:AuthService, private router:Router) { }
   users: User[];
@@ -106,12 +108,14 @@ export class ManageComponent implements OnInit {
     console.log(group.name);
     console.log(group.rooms);
     console.log(this.newroom);
+    this.newroom = new Room(this.newroomname, group.name);
     this.authservice.addRoom(group, this.newroom).subscribe((data)=>{
       console.log(data);
       if(data.err == null){
         console.log("added room");
       }
-      this.newroom = "";
+      this.newroomname = "";
+      this.newroom = null;
     });
   }
 
@@ -124,7 +128,7 @@ export class ManageComponent implements OnInit {
   }
 
   // Delete room
-  deleteRoom(group:Group, room:string){
+  deleteRoom(group:Group, room:Room){
     this.authservice.deleteRoom(group, room).subscribe((data)=>{
       console.log(data);
     })
@@ -142,6 +146,18 @@ export class ManageComponent implements OnInit {
       console.log(data);
       if(data.err == null){
         console.log("added user to group");
+      }
+      this.selecteduser = null;
+    });
+  }
+
+  // Add a groupmember to a room
+  addUserRoom(group:Group, room:Room){
+    console.log(this.selecteduser);
+    this.authservice.addUserRoom(group, room, this.selecteduser).subscribe((data)=>{
+      console.log(data);
+      if(data.err == null){
+        console.log("added user to room");
       }
       this.selecteduser = null;
     });

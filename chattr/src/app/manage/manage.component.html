@@ -70,7 +70,22 @@
                     <td>{{ group.name}}</td>
                     <td>
                         <ul *ngFor="let room of group.rooms">
-                            <li>{{room}}</li><button (click)="deleteRoom(group, room)" class="btn btn-danger">Delete</button>
+                            <li>{{room.name}}</li>
+                            <ul *ngFor="let member of room.roommembers">
+                                <li>{{member}}</li>
+                            </ul>
+                            <button (click)="deleteRoom(group, room)" class="btn btn-danger btn-sm">Delete</button>
+                            <form (submit)="addUserRoom(group, room)">
+                                <div>
+                                    <label>Add User</label>
+                                    <select [(ngModel)] = "selecteduser" id="selecteduser" name="selecteduser">
+                                        <option class="option" *ngFor="let user of group.groupmembers" [ngValue] = "user">
+                                            {{user}}
+                                        </option>
+                                    </select>
+                                    <button type="submit" class="btn btn-primary">Add User</button>
+                                </div>
+                            </form>
                         </ul>
                     </td>
                     <td>
@@ -84,7 +99,7 @@
                         <form (submit)="addnewRoom(group)">
                             <div>
                                 <label>Add a room</label>
-                                <input type="text" class="form-control" id="newroom" [(ngModel)]="newroom" name="newroom">
+                                <input type="text" class="form-control" id="newroomname" [(ngModel)]="newroomname" name="newroomname">
                             </div>
                             <div>
                                 <button type="submit" class="btn btn-primary"><i class="fa fa-plus-square"></i>Add Room</button>

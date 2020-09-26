@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { User } from '../user';
 import { Group } from '../group';
 import { ThrowStmt } from '@angular/compiler';
+import { Room } from '../room';
 
 @Injectable({
   providedIn: 'root'
@@ -62,7 +63,7 @@ export class AuthService {
     return this.http.post<any>('http://localhost:3000/api/addgroup', group);
   }
 
-  addRoom(group:Group, room:string){
+  addRoom(group:Group, room:Room){
     return this.http.post<any>('http://localhost:3000/api/addroom', {group:group, newroom:room});
   }
 
@@ -70,11 +71,15 @@ export class AuthService {
     return this.http.post<any>('http://localhost:3000/api/deletegroup', {group:group});
   }
 
-  deleteRoom(group:Group, room:string){
+  deleteRoom(group:Group, room:Room){
     return this.http.post<any>('http://localhost:3000/api/deleteroom', {group:group, room:room});
   }
 
   addUserGroup(group:Group, username:string){
     return this.http.post<any>('http://localhost:3000/api/addusergroup', {group:group, username:username});
+  }
+
+  addUserRoom(group:Group, room:Room, username:string){
+    return this.http.post<any>('http://localhost:3000/api/adduserroom', {group:group, room:room, username:username});
   }
 }
