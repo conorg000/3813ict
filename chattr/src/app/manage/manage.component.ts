@@ -151,6 +151,12 @@ export class ManageComponent implements OnInit {
     });
   }
 
+  removeUserGroup(group:Group){
+    this.authservice.removeUserGroup(group, this.selecteduser).subscribe((data)=>{
+      console.log(data);
+    })
+  }
+
   // Add a groupmember to a room
   addUserRoom(group:Group, room:Room){
     console.log(this.selecteduser);
