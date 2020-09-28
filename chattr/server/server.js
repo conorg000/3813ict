@@ -37,7 +37,7 @@ app.use(cors(corsOptions));
 
 // Where to look for routes
 app.use(express.static(path.join(__dirname, '../dist/chattr/')));
-require('./routes/api-login.js')(app);
+
 
 // Connect to sockets
 //sockets.connect(io, PORT);
@@ -48,6 +48,7 @@ MongoClient.connect(url, {poolSize:10, useNewUrlParser: true, useUnifiedTopology
     if (err) {return console.log(err)}
         const dbName = 'mydb';
         const db = client.db(dbName);
+        require('./routes/api-login.js')(db,app,path);
         require('./routes/api-adduser.js')(db,app,path);
         require('./routes/api-getusers.js')(db,app,path);
         require('./routes/api-deleteuser.js')(db,app,path);

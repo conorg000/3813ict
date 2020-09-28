@@ -9,7 +9,7 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  email:string = "";
+  username:string = "";
   pwd:string = "";
   errormsg = "";
   newuser:User;
@@ -23,10 +23,12 @@ export class LoginComponent implements OnInit {
   itemClicked() {
     //console.log(this.email);
     //let data = this.http.post<User>('http://localhost:3000/api/auth', { email: this.userEmail, pwd: this.userPw });
-    this.authservice.login(this.email, this.pwd).subscribe(
+    console.log(this.username);
+    console.log(this.pwd);
+    this.authservice.login(this.username, this.pwd).subscribe(
       data=>{
         if (data.valid == true){
-          this.newuser = new User(data.email, data.username, data.role);
+          this.newuser = new User(data.email, data.username, data.role, data.id, '', data.valid);
           //console.log(data);
           sessionStorage.setItem('currentUser', JSON.stringify(this.newuser));
           this.router.navigate(['/account']);

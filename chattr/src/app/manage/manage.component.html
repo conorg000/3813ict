@@ -1,7 +1,7 @@
-  
+  <h1>Hi {{currentUser.username}}</h1>
     <div class="row">
-        <h3>Users</h3>
-        <table class="table table-hover">
+        <table *ngIf="currentUser.role == 'super admin'" class="table table-hover">
+            <h3>Users</h3>
             <thead>
                 <tr>
                     <td>Name</td>
@@ -21,7 +21,7 @@
                 </tr>
             </tbody>
         </table>
-        <div>
+        <div *ngIf="currentUser.role == 'super admin'">
             <h3>Add a new user</h3>
             <form (submit)="addnewUser($event)">
             <div>
@@ -38,7 +38,11 @@
             </div>
             <div>
                 <label for="userid">Role</label>
-                <input type="text" class="form-control" id="userrole" [(ngModel)]="userrole" name="userrole">
+                <select [(ngModel)] = "userrole" id="userrole" name="userrole">
+                    <option class="option" value="user">User</option>
+                    <option class="option" value="group admin">Group Admin</option>
+                    <option class="option" value="super admin">Super Admin</option>
+                </select>
             </div>
             <div>
                 <label for="userid">Password</label>
@@ -74,7 +78,7 @@
                             <ul *ngFor="let member of room.roommembers">
                                 <li>{{member}}</li>
                             </ul>
-                            <button (click)="deleteRoom(group, room)" class="btn btn-danger btn-sm">Delete</button>
+                            <button *ngIf="(currentUser.role != 'group assis')&&(currentUser.role != 'user')" (click)="deleteRoom(group, room)" class="btn btn-danger btn-sm">Delete</button>
                             <form (submit)="addUserRoom(group, room)">
                                 <div>
                                     <label>Add User</label>
@@ -104,8 +108,8 @@
                             <li>{{member}}</li>
                         </ul>
                     </td>
-                    <td><button (click)="deleteGroup(group)" class="btn btn-danger">Delete</button></td>
-                    <td><button (click)="editGroup(group)" class="btn btn-danger">Edit</button></td>
+                    <td><button *ngIf="(currentUser.role != 'group assis')&&(currentUser.role != 'user')" (click)="deleteGroup(group)" class="btn btn-danger">Delete</button></td>
+                    <td><button *ngIf="(currentUser.role != 'group assis')&&(currentUser.role != 'user')" (click)="editGroup(group)" class="btn btn-danger">Edit</button></td>
                     <td>
                         <form (submit)="addnewRoom(group)">
                             <div>
@@ -118,7 +122,7 @@
                         </form>
                     </td>
                     <td>
-                        <form (submit)="addUserGroup(group)">
+                        <form *ngIf="(currentUser.role != 'group assis')&&(currentUser.role != 'user')" (submit)="addUserGroup(group)">
                             <div>
                                 <label>Add User</label>
                                 <select [(ngModel)] = "selecteduser" id="selecteduser" name="selecteduser">
@@ -131,7 +135,7 @@
                         </form>
                     </td>
                     <td>
-                        <form (submit)="removeUserGroup(group)">
+                        <form *ngIf="(currentUser.role != 'group assis')&&(currentUser.role != 'user')" (submit)="removeUserGroup(group)">
                             <div>
                                 <label>Remove User (from group and all rooms)</label>
                                 <select [(ngModel)] = "selecteduser" id="selecteduser" name="selecteduser">

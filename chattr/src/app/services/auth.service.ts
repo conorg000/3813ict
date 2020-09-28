@@ -20,8 +20,8 @@ export class AuthService {
 
   constructor(private http:HttpClient) { }
 
-  login(email:string, pwd:string){
-    return this.http.post<User>('http://localhost:3000/api/auth', { email: email, pwd: pwd });
+  login(username:string, pwd:string){
+    return this.http.post<User>('http://localhost:3000/api/auth', { username: username, pwd: pwd });
   }
 
   userData(username:string){

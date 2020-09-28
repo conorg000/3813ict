@@ -12,6 +12,7 @@ import { Room } from '../room';
 })
 
 export class ManageComponent implements OnInit {
+  currentUser:User;
   userid:number=null;
   username:string="";
   useremail:string="";
@@ -31,8 +32,17 @@ export class ManageComponent implements OnInit {
   groups:Group[];
 
   ngOnInit() {
-    this.getGroups();
-    this.getUsers();
+    try {
+      this.currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+      if(this.currentUser){
+        this.getGroups();
+        this.getUsers();
+      }
+    }
+    catch(err){
+      console.log("Not logged in");
+      this.router.navigateByUrl('/login');
+    }
   }
 
   // User functions
