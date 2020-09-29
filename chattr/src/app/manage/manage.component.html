@@ -72,8 +72,8 @@
             </thead>
             <tbody>
                 <tr *ngFor="let group of groups">
-                        <td>{{ group.name}}</td>
-                        <td>
+                        <td *ngIf="(group.groupassis.indexOf(currentUser.username) !== -1) || (currentUser.role == 'group admin') || (currentUser.role == 'super admin')">{{ group.name}}</td>
+                        <td *ngIf="(group.groupassis.indexOf(currentUser.username) !== -1) || (currentUser.role == 'group admin') || (currentUser.role == 'super admin')">
                             <ul *ngFor="let room of group.rooms">
                                 <li>{{room.name}}</li>
                                 <ul *ngFor="let member of room.roommembers">
@@ -104,12 +104,12 @@
                                 </form>
                             </ul>
                         </td>
-                        <td>
+                        <td *ngIf="(group.groupassis.indexOf(currentUser.username) !== -1) || (currentUser.role == 'group admin') || (currentUser.role == 'super admin')">
                             <ul *ngFor="let member of group.groupmembers">
                                 <li>{{member}}</li>
                             </ul>
                         </td>
-                        <td>
+                        <td *ngIf="(group.groupassis.indexOf(currentUser.username) !== -1) || (currentUser.role == 'group admin') || (currentUser.role == 'super admin')">
                             <ul *ngFor="let assis of group.groupassis">
                                 <li>{{assis}}</li>
                             </ul>
@@ -130,7 +130,7 @@
                             </form>
                             <form *ngIf="(currentUser.role == 'group admin')||(currentUser.role == 'super admin')" (submit)="removeGroupAssis(group)">
                                 <div>
-                                    <label>Add Group Assistant</label>
+                                    <label>Remove Group Assistant</label>
                                     <select [(ngModel)] = "selectedgroupassis" id="selectedgroupassis" name="selectedgroupassis">
                                         <option class="option" *ngFor="let user of group.groupassis" [ngValue] = "user">
                                             {{user}}
@@ -140,7 +140,7 @@
                                 </div>
                             </form>
                         </td>
-                        <td>
+                        <td *ngIf="(group.groupassis.indexOf(currentUser.username) !== -1) || (currentUser.role == 'group admin') || (currentUser.role == 'super admin')">
                             <form (submit)="addnewRoom(group)">
                                 <div>
                                     <label>Add a room</label>
@@ -181,8 +181,8 @@
             </tbody>
         </table>
         <div>
+            <form *ngIf="(currentUser.role == 'group admin')||(currentUser.role == 'super admin')" (submit)="addnewGroup($event)">
             <h3>Add a new group</h3>
-            <form (submit)="addnewGroup($event)">
             <div>
                 <label>Group Name</label>
                 <input type="text" class="form-control" id="groupname" [(ngModel)]="groupname" name="groupname">

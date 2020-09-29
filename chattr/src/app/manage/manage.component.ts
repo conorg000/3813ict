@@ -35,12 +35,8 @@ export class ManageComponent implements OnInit {
   ngOnInit() {
     try {
       this.currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
-      if(this.currentUser.role != "user"){
-        this.getGroups();
-        this.getUsers();
-      }else{
-        this.router.navigateByUrl('/account');
-      }
+      this.getGroups();
+      this.getUsers();
     }
     catch(err){
       console.log("Not logged in");
