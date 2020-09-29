@@ -4,9 +4,11 @@ export class Group {
     name:string;
     rooms:Room[];
     groupmembers:string[];
-    constructor(name:string='', rooms:Room[]=[], groupmembers:string[]=[]){
+    groupassis:string[];
+    constructor(name:string='', rooms:Room[]=[], groupmembers:string[]=[], groupassis:string[]=[]){
         this.name = name;
         this.rooms = rooms;
         this.groupmembers = groupmembers;
+        this.groupassis = groupassis;
     }
 }

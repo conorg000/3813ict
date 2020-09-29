@@ -90,4 +90,8 @@ export class AuthService {
   removeUserRoom(room:Room, username:string){
     return this.http.post<any>('http://localhost:3000/api/removeuserroom', {room:room, username:username});
   }
+
+  addGroupAssis(group:Group, groupassis:string){
+    return this.http.post<any>('http://localhost:3000/api/addgroupassis', {group:group, groupassis:groupassis});
+  }
 }

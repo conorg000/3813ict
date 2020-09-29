@@ -26,6 +26,7 @@ export class ManageComponent implements OnInit {
   grouprooms:any=[];
   newroomname:string="";
   newroom:Room;
+  selectedgroupassis:string="";
 
   constructor(private authservice:AuthService, private router:Router) { }
   users: User[];
@@ -34,9 +35,11 @@ export class ManageComponent implements OnInit {
   ngOnInit() {
     try {
       this.currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
-      if(this.currentUser){
+      if(this.currentUser.role != "user"){
         this.getGroups();
         this.getUsers();
+      }else{
+        this.router.navigateByUrl('/account');
       }
     }
     catch(err){
@@ -185,6 +188,14 @@ export class ManageComponent implements OnInit {
       console.log(data);
     });
     this.selecteduser = null;
+  }
+
+  // Add a user to become group assistant
+  addGroupAssis(group:Group){
+    this.authservice.addGroupAssis(group, this.selectedgroupassis).subscribe((data)=>{
+      console.log(data);
+    });
+    this.selectedgroupassis = "";
   }
 
 }
