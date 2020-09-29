@@ -192,7 +192,15 @@ export class ManageComponent implements OnInit {
 
   // Add a user to become group assistant
   addGroupAssis(group:Group){
+    console.log(this.selectedgroupassis);
     this.authservice.addGroupAssis(group, this.selectedgroupassis).subscribe((data)=>{
+      console.log(data);
+    });
+    this.selectedgroupassis = "";
+  }
+
+  removeGroupAssis(group:Group){
+    this.authservice.removeGroupAssis(group, this.selectedgroupassis).subscribe((data)=>{
       console.log(data);
     });
     this.selectedgroupassis = "";

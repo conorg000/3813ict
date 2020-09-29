@@ -63,6 +63,7 @@
                     <td>Name</td>
                     <td>Rooms</td>
                     <td>Members</td>
+                    <td>Group Assistants</td>
                     <td>Manage</td>
                     <td></td>
                     <td></td>
@@ -71,96 +72,111 @@
             </thead>
             <tbody>
                 <tr *ngFor="let group of groups">
-                    <td>{{ group.name}}</td>
-                    <td>
-                        <ul *ngFor="let room of group.rooms">
-                            <li>{{room.name}}</li>
-                            <ul *ngFor="let member of room.roommembers">
+                        <td>{{ group.name}}</td>
+                        <td>
+                            <ul *ngFor="let room of group.rooms">
+                                <li>{{room.name}}</li>
+                                <ul *ngFor="let member of room.roommembers">
+                                    <li>{{member}}</li>
+                                </ul>
+                                <button *ngIf="(currentUser.role == 'group admin')||(currentUser.role == 'super admin')" (click)="deleteRoom(group, room)" class="btn btn-danger btn-sm">Delete</button>
+                                <form (submit)="addUserRoom(group, room)">
+                                    <div>
+                                        <label>Add User</label>
+                                        <select [(ngModel)] = "selecteduser" id="selecteduser" name="selecteduser">
+                                            <option class="option" *ngFor="let user of group.groupmembers" [ngValue] = "user">
+                                                {{user}}
+                                            </option>
+                                        </select>
+                                        <button type="submit" class="btn btn-primary">Add User</button>
+                                    </div>
+                                </form>
+                                <form (submit)="removeUserRoom(room)">
+                                    <div>
+                                        <label>Remove User</label>
+                                        <select [(ngModel)] = "selecteduser" id="selecteduser" name="selecteduser">
+                                            <option class="option" *ngFor="let user of group.groupmembers" [ngValue] = "user">
+                                                {{user}}
+                                            </option>
+                                        </select>
+                                        <button type="submit" class="btn btn-danger">Remove User</button>
+                                    </div>
+                                </form>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul *ngFor="let member of group.groupmembers">
                                 <li>{{member}}</li>
                             </ul>
-                            <button *ngIf="(currentUser.role == 'group admin')||(currentUser.role == 'super admin')" (click)="deleteRoom(group, room)" class="btn btn-danger btn-sm">Delete</button>
-                            <form (submit)="addUserRoom(group, room)">
+                        </td>
+                        <td>
+                            <ul *ngFor="let assis of group.groupassis">
+                                <li>{{assis}}</li>
+                            </ul>
+                        </td>
+                        <td><button *ngIf="(currentUser.role == 'group admin')||(currentUser.role == 'super admin')" (click)="deleteGroup(group)" class="btn btn-danger">Delete</button></td>
+                        <td><button *ngIf="(currentUser.role == 'group admin')||(currentUser.role == 'super admin')" (click)="editGroup(group)" class="btn btn-danger">Edit</button></td>
+                        <td>
+                            <form *ngIf="(currentUser.role == 'group admin')||(currentUser.role == 'super admin')" (submit)="addGroupAssis(group)">
+                                <div>
+                                    <label>Add Group Assistant</label>
+                                    <select [(ngModel)] = "selectedgroupassis" id="selectedgroupassis" name="selectedgroupassis">
+                                        <option class="option" *ngFor="let user of group.groupmembers" [ngValue] = "user">
+                                            {{user}}
+                                        </option>
+                                    </select>
+                                    <button type="submit" class="btn btn-primary">Add Group Assistant</button>
+                                </div>
+                            </form>
+                            <form *ngIf="(currentUser.role == 'group admin')||(currentUser.role == 'super admin')" (submit)="removeGroupAssis(group)">
+                                <div>
+                                    <label>Add Group Assistant</label>
+                                    <select [(ngModel)] = "selectedgroupassis" id="selectedgroupassis" name="selectedgroupassis">
+                                        <option class="option" *ngFor="let user of group.groupassis" [ngValue] = "user">
+                                            {{user}}
+                                        </option>
+                                    </select>
+                                    <button type="submit" class="btn btn-danger">Remove Group Assistant</button>
+                                </div>
+                            </form>
+                        </td>
+                        <td>
+                            <form (submit)="addnewRoom(group)">
+                                <div>
+                                    <label>Add a room</label>
+                                    <input type="text" class="form-control" id="newroomname" [(ngModel)]="newroomname" name="newroomname">
+                                </div>
+                                <div>
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-plus-square"></i>Add Room</button>
+                                </div>
+                            </form>
+                        </td>
+                        <td>
+                            <form *ngIf="(currentUser.role == 'group admin')||(currentUser.role == 'super admin')" (submit)="addUserGroup(group)">
                                 <div>
                                     <label>Add User</label>
                                     <select [(ngModel)] = "selecteduser" id="selecteduser" name="selecteduser">
-                                        <option class="option" *ngFor="let user of group.groupmembers" [ngValue] = "user">
-                                            {{user}}
+                                        <option class="option" *ngFor="let user of users" [ngValue] = "user.username">
+                                            {{user.username}}
                                         </option>
                                     </select>
                                     <button type="submit" class="btn btn-primary">Add User</button>
                                 </div>
                             </form>
-                            <form (submit)="removeUserRoom(room)">
+                        </td>
+                        <td>
+                            <form *ngIf="(currentUser.role == 'group admin')||(currentUser.role == 'super admin')" (submit)="removeUserGroup(group)">
                                 <div>
-                                    <label>Remove User</label>
+                                    <label>Remove User (from group and all rooms)</label>
                                     <select [(ngModel)] = "selecteduser" id="selecteduser" name="selecteduser">
-                                        <option class="option" *ngFor="let user of group.groupmembers" [ngValue] = "user">
-                                            {{user}}
+                                        <option class="option" *ngFor="let user of users" [ngValue] = "user.username">
+                                            {{user.username}}
                                         </option>
                                     </select>
                                     <button type="submit" class="btn btn-danger">Remove User</button>
                                 </div>
                             </form>
-                        </ul>
-                    </td>
-                    <td>
-                        <ul *ngFor="let member of group.groupmembers">
-                            <li>{{member}}</li>
-                        </ul>
-                    </td>
-                    <td><button *ngIf="(currentUser.role == 'group admin')||(currentUser.role == 'super admin')" (click)="deleteGroup(group)" class="btn btn-danger">Delete</button></td>
-                    <td><button *ngIf="(currentUser.role == 'group admin')||(currentUser.role == 'super admin')" (click)="editGroup(group)" class="btn btn-danger">Edit</button></td>
-                    <td>
-                        <form *ngIf="(currentUser.role == 'group admin')||(currentUser.role == 'super admin')" (submit)="addGroupAssis(group)">
-                            <div>
-                                <label>Add Group Assistant</label>
-                                <select [(ngModel)] = "selectedgroupassis" id="selectedgroupassis" name="selectedgroupassis">
-                                    <option class="option" *ngFor="let user of group.groupmembers" [ngValue] = "user">
-                                        {{user}}
-                                    </option>
-                                </select>
-                                <button type="submit" class="btn btn-primary">Add User</button>
-                            </div>
-                        </form>
-                    </td>
-                    <td>
-                    <td>
-                        <form (submit)="addnewRoom(group)">
-                            <div>
-                                <label>Add a room</label>
-                                <input type="text" class="form-control" id="newroomname" [(ngModel)]="newroomname" name="newroomname">
-                            </div>
-                            <div>
-                                <button type="submit" class="btn btn-primary"><i class="fa fa-plus-square"></i>Add Room</button>
-                            </div>
-                        </form>
-                    </td>
-                    <td>
-                        <form *ngIf="(currentUser.role == 'group admin')||(currentUser.role == 'super admin')" (submit)="addUserGroup(group)">
-                            <div>
-                                <label>Add User</label>
-                                <select [(ngModel)] = "selecteduser" id="selecteduser" name="selecteduser">
-                                    <option class="option" *ngFor="let user of users" [ngValue] = "user.username">
-                                        {{user.username}}
-                                    </option>
-                                </select>
-                                <button type="submit" class="btn btn-primary">Add User</button>
-                            </div>
-                        </form>
-                    </td>
-                    <td>
-                        <form *ngIf="(currentUser.role == 'group admin')||(currentUser.role == 'super admin')" (submit)="removeUserGroup(group)">
-                            <div>
-                                <label>Remove User (from group and all rooms)</label>
-                                <select [(ngModel)] = "selecteduser" id="selecteduser" name="selecteduser">
-                                    <option class="option" *ngFor="let user of users" [ngValue] = "user.username">
-                                        {{user.username}}
-                                    </option>
-                                </select>
-                                <button type="submit" class="btn btn-danger">Remove User</button>
-                            </div>
-                        </form>
-                    </td>
+                        </td>
                 </tr>
             </tbody>
         </table>

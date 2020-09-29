@@ -94,4 +94,8 @@ export class AuthService {
   addGroupAssis(group:Group, groupassis:string){
     return this.http.post<any>('http://localhost:3000/api/addgroupassis', {group:group, groupassis:groupassis});
   }
+
+  removeGroupAssis(group:Group, groupassis:string){
+    return this.http.post<any>('http://localhost:3000/api/removegroupassis', {group:group, groupassis:groupassis});
+  }
 }

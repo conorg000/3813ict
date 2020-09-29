@@ -1,21 +1,22 @@
 module.exports = function(db,app){
     app.post('/api/adduserroom', function(req,res){
-        if(!req.body){
+        if(!req.body || req.body.username == ''){
             return res.sendStatus(400)
-        }
-        console.log(req.body);
-        user = req.body.username;
-        room = req.body.room;
-        group = req.body.group;
-        const collection = db.collection('groups');
-        newmembers = [];
-        if (room.roommembers.includes(user)){
-            res.send({'ok':false});
         }else{
-            console.log(user);
-            collection.updateOne({'name':group.name, 'rooms.name':room.name}, {$push:{'rooms.$.roommembers':user}},(data)=>{
-                res.send(data);
-            }); 
+            console.log(req.body);
+            user = req.body.username;
+            room = req.body.room;
+            group = req.body.group;
+            const collection = db.collection('groups');
+            newmembers = [];
+            if (room.roommembers.includes(user)){
+                res.send({'ok':false});
+            }else{
+                console.log(user);
+                collection.updateOne({'name':group.name, 'rooms.name':room.name}, {$push:{'rooms.$.roommembers':user}},(data)=>{
+                    res.send(data);
+                }); 
+            }
         }
     });
 }
