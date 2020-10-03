@@ -1,3 +1,4 @@
+const { resolveSoa } = require("dns");
 const fs = require("fs");
 const path = require('path');
 
@@ -21,6 +22,7 @@ module.exports = function(db,app){
             if (count==0){
                 console.log('bu keyi');
                 user.valid = false;
+                res.send(user);
             }else{
                 collection.find({'username':username, 'pwd':pwd}).toArray((err,data)=>{
                     console.log(data[0].username);
