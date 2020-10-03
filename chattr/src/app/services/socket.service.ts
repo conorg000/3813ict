@@ -3,6 +3,8 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Message } from '../message';
 import * as io from 'socket.io-client';
+import { Group } from '../group';
+import { Room } from '../room';
 const SERVER_URL = 'http://localhost:3000';
 
 @Injectable({
@@ -10,13 +12,21 @@ const SERVER_URL = 'http://localhost:3000';
 })
 export class SocketService {
   private socket;
-  constructor() { }
+
+  constructor(private http:HttpClient) { }
+
+  
+  addMessage(message:Message){
+    console.log('Sending message to server');
+    return this.http.post<any>('http://localhost:3000/api/addmessage', {message: message});
+  }
 
   public initSocket(): void{
     this.socket = io(SERVER_URL);
   }
 
-  public send(message:Message):void{
+  public send(message:Message){
+    console.log('SENDING...');
     this.socket.emit('message', message);
   }
 
@@ -37,4 +47,6 @@ export class SocketService {
     });
     return observeStatus;
   }
+
+  
 }

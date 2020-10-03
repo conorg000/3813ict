@@ -69,22 +69,6 @@ export class ChatComponent implements OnInit {
     } 
   }
 
-  sendMsg(){
-    console.log(this.message);
-    if (this.chosengroup != ""){
-      this.authservice.sendMsg(this.username, this.message, this.chosengroup, this.chosenchat.roomname).subscribe(
-        (data: any)=>{
-          if (data.valid == true){
-            //window.location.reload();
-            this.seeChat(this.chosenchat.roomname, this.chosengroup);
-          }else{
-            alert("Somethign went wrong!");
-          }
-        })
-    }else{
-      console.log('No room selected');
-    }
-  }
 
 
 

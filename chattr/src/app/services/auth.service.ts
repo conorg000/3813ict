@@ -4,6 +4,7 @@ import { User } from '../user';
 import { Group } from '../group';
 import { ThrowStmt } from '@angular/compiler';
 import { Room } from '../room';
+import { Message } from '../message';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,6 @@ export class AuthService {
   username:string;
   pwd:string;
   room:string;
-  message:string;
   group:string;
   roomname:string;
 
@@ -30,10 +30,6 @@ export class AuthService {
 
   groupData(){
     return this.http.post('http://localhost:3000/api/groupdata', {});
-  }
-
-  sendMsg(username:string, message:string, group:string, roomname:string){
-    return this.http.post('http://localhost:3000/api/sendmsg', {username:username, message:message, group:group, roomname:roomname});
   }
 
   // Routes for User management

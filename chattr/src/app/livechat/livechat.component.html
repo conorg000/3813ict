@@ -1,4 +1,25 @@
 <h1>Live Chat</h1>
+    <form>
+    <label>Choose Group</label>
+    <select [(ngModel)] = "selectedgroup" id="selectedgroup" name="selectedgroup">
+        <ng-container *ngFor="let group of groups">
+            <option class="option" *ngIf="group.groupmembers.indexOf(currentUser.username) !== -1" [ngValue] = "group.name">
+                {{group.name}}
+            </option>
+        </ng-container>
+    </select>
+    <label>Choose Room</label>
+    <select [(ngModel)] = "selectedroom" id="selectedroom" name="selectedroom">
+        <ng-container *ngFor="let group of groups">
+            <ng-container *ngIf="group.name == selectedgroup">
+                <ng-container *ngFor="let room of group.rooms">
+                    <option class="option" *ngIf="room.roommembers.indexOf(currentUser.username) !== -1" [ngValue] = "room.name">
+                        {{room.name}}
+                    </option>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+    </select>
 <div>
     <h3>Active</h3>
     <ul>

@@ -3,8 +3,11 @@ import { SocketService } from '../services/socket.service';
 import { FormsModule } from '@angular/forms';
 import { isObservable } from 'rxjs';
 import { User } from '../user';
+import { Group } from '../group';
+import { Room } from '../room';
 import { Message } from '../message';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-livechat',
@@ -19,24 +22,31 @@ export class LivechatComponent implements OnInit {
   ioConnection:any;
   currentUser:User;
   time:string;
+  groups:Group[] = [];
+  selectedgroup:string = '';
+  selectedroom:string = '';
+  //rooms:Room[] = [];
   group:string = 'testgroup';
   room:string = 'test room';
+  msgtosend:Message;
 
-  constructor(private socketService:SocketService, private router:Router) { }
+  constructor(private socketService:SocketService, private router:Router, private authservice:AuthService) { }
 
   ngOnInit(){
     try {
       this.currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
       this.initIoConnection();
-      //this.getGroups();
-      //this.getUsers();
+      this.getUserGroups();
     }
     catch(err){
       console.log("Not logged in");
       this.router.navigateByUrl('/login');
     }
-    
   }
+
+  // Select messages to load
+  //chooseChat(){  
+  //}
 
   private initIoConnection(){
     this.socketService.initSocket();
@@ -49,7 +59,6 @@ export class LivechatComponent implements OnInit {
         this.livestatus.push(username);
         this.socketService.sendStatus(this.currentUser.username);
       }
-      // add message to DB
     });
     // When a message arrive, add it to the array of chat history
     this.ioConnection = this.socketService.onMessage().subscribe((message:Message) => {
@@ -59,13 +68,34 @@ export class LivechatComponent implements OnInit {
   }
 
   chat(messagecontent){
+    //this.socketService.addMessage(this.msgtosend);
     if(this.messagecontent){
-      this.time = new Date().toLocaleString()
-      this.socketService.send(new Message(this.currentUser.username, this.time, this.messagecontent, this.group, this.room));
-      // Save to mongoDB every time it is sent
+      this.time = new Date().toLocaleString();
+      this.msgtosend = new Message(this.currentUser.username, this.time, this.messagecontent, this.selectedgroup, this.selectedroom);
+      // Save message to room chat in Mongo
+      this.socketService.addMessage(this.msgtosend).subscribe(data =>{
+        console.log(data);
+      });
+      console.log(this.msgtosend);
+      console.log('Sending to Mongo');
+
+      // Send message via sockets
+      this.socketService.send(this.msgtosend);
+      console.log('Sending to socket');
+
       this.messagecontent = null;
     }else{
       console.log("No message");
     }
   }
+
+  // Retrieve groups and rooms for the current user
+  getUserGroups(): void{
+    this.authservice.getGroups().subscribe(data=>{
+      this.groups = data;
+    });
+    //this.groups = this.groups.filter(item => item.groupmembers.includes(this.currentUser.username));
+  }
+
+
 }
