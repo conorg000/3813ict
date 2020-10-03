@@ -8,6 +8,7 @@ chai.use(chaiHttp);
 
 // Unit and integration tests for each node.js route
 // A positive test case and a negative test case is provided for each route
+// In terms of layout: tests are grouped by the main data structure (groups, messages, users etc.)
 describe("Node Server Test", function(){
     before(function() {
         console.log("Before test");
@@ -16,6 +17,7 @@ describe("Node Server Test", function(){
         console.log("After test");
     });
 
+    // Login Tests
     // Test user login works
     describe('/api-login', () => {
         it('should return valid == true and status 200 when user exists', (done) => {
@@ -58,6 +60,23 @@ describe("Node Server Test", function(){
                 });
         });
     });
+
+    // Add Message Tests
+    // Test that empty content is captured
+    describe('/api-addmessage', () => {
+        it('should have status 500 when message has no content', (done) => {
+            chai.request(app)
+                .post('/api/addmessage')
+                .send({})
+                .end((err, res) => {
+                    res.should.have.status(500);
+                    done();
+                });
+        });
+    });
+
+
+
 });
 
     // add tests
