@@ -11,7 +11,11 @@
     </div>
     <div>
         <label for="userid">Role</label>
-        <input type="text" class="form-control" id="userrole" [(ngModel)]="userrole" name="userrole" placeholder="{{userOrigin.role}}">
+        <select [(ngModel)] = "userOrigin.role" id="userrole" name="userrole">
+            <option selected class="option" value="user">User</option>
+            <option class="option" value="group admin">Group Admin</option>
+            <option class="option" value="super admin">Super Admin</option>
+        </select>
     </div>
     <div>
         <label for="userid">Password</label>

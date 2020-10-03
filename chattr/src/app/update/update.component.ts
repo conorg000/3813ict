@@ -28,7 +28,7 @@ export class UpdateComponent implements OnInit {
   // Pass the new user details, but use the original id
   editUser(event){
     event.preventDefault();
-    this.newuser = new User(this.useremail, this.username, this.userrole, this.userOrigin.id, this.userpwd, this.uservalid);
+    this.newuser = new User(this.useremail, this.username, this.userOrigin.role, this.userOrigin.id, this.userpwd, this.uservalid);
     this.authservice.updateUser(this.newuser).subscribe(data=>{
       this.router.navigate(['manage']);
     })

@@ -1,7 +1,7 @@
 module.exports = function(db, app, ObjectID){
     var result;
     app.post('/api/updateuser', function(req, res){
-        if (!req.body){
+        if (!req.body || req.body.email == '' || req.body.username == '' || req.body.role == '' || req.body.pwd == ''){
             return res.sendStatus(400)
         }
         user = req.body;
