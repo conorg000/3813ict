@@ -3,6 +3,7 @@ import { SocketService } from '../services/socket.service';
 import { FormsModule } from '@angular/forms';
 import { isObservable } from 'rxjs';
 import { User } from '../user';
+import { Message } from '../message';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,10 +14,13 @@ import { Router } from '@angular/router';
 export class LivechatComponent implements OnInit {
   messagecontent:string="";
   // Initialise this to the room's chat history
-  messages:string[] = [];
+  messages:Message[] = [];
   livestatus:string[] = [];
   ioConnection:any;
   currentUser:User;
+  time:string;
+  group:string = 'testgroup';
+  room:string = 'test room';
 
   constructor(private socketService:SocketService, private router:Router) { }
 
@@ -47,17 +51,18 @@ export class LivechatComponent implements OnInit {
       }
       // add message to DB
     });
-    // When a message arrives, add it to the array of chat history
-    // Save to mongoDB every time??
-    this.ioConnection = this.socketService.onMessage().subscribe((message:string) => {
+    // When a message arrive, add it to the array of chat history
+    this.ioConnection = this.socketService.onMessage().subscribe((message:Message) => {
+      // If the room/group matches the current room/group, add it to the array
       this.messages.push(message);
-      // add message to DB
     });
   }
 
   chat(messagecontent){
     if(this.messagecontent){
-      this.socketService.send(this.messagecontent);
+      this.time = new Date().toLocaleString()
+      this.socketService.send(new Message(this.currentUser.username, this.time, this.messagecontent, this.group, this.room));
+      // Save to mongoDB every time it is sent
       this.messagecontent = null;
     }else{
       console.log("No message");

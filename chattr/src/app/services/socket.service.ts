@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { Message } from '../message';
 import * as io from 'socket.io-client';
 const SERVER_URL = 'http://localhost:3000';
 
@@ -15,7 +16,7 @@ export class SocketService {
     this.socket = io(SERVER_URL);
   }
 
-  public send(message:string):void{
+  public send(message:Message):void{
     this.socket.emit('message', message);
   }
 
@@ -25,7 +26,7 @@ export class SocketService {
 
   public onMessage():Observable<any>{
     let observable = new Observable(observer=>{
-      this.socket.on('message', (data:string)=> observer.next(data));
+      this.socket.on('message', (data:Message)=> observer.next(data));
     });
     return observable;
   }
