@@ -5,7 +5,7 @@ const path = require('path');
 module.exports = function(db,app){
     // Route to check user credentials
     app.post('/api/auth', function(req, res){
-        if(!req.body){
+        if(!req.body || req.body.username == '' || req.body.pwd == ''){
             return res.sendStatus(400)
         }
         username = req.body.username;

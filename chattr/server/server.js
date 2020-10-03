@@ -15,33 +15,34 @@ app.use(bodyParser.json());
 
 
 app.use(function(req, res, next) {
-     res.header("Access-Control-Allow-Origin", 'http:localhost:4200'); 
+     res.header("Access-Control-Allow-Origin", '*'); 
      res.header("Access-Control-Allow-Credentials", true);
      res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-     res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json,Authorization,text/plain,*/*');
+     res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json,Authorization,text/plain,*/*, other_header');
+    // res.header("Access-Control-Expose-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json,Authorization,text/plain,*/*, other_header');
      next();
 });
 
-const whitelist = ['http://localhost:4200', 'http://localhost:3000'];
-const corsOptions = {
-    credentials: true, // This is important.
-    origin: (origin, callback) => {
-        if(whitelist.includes(origin))
-            return callback(null, true)
+////////////////////////////////////////////////////////////////////
+/// Comment out corsOptions to undertake unit tests (test.js)    ///
+/// Uncomment for production                                     ///
+////////////////////////////////////////////////////////////////////
+// const whitelist = ['http://localhost:4200', 'http://localhost:3000'];
+// const corsOptions = {
+//     credentials: true, // This is important.
+//     origin: (origin, callback) => {
+//         if(whitelist.includes(origin))
+//             return callback(null, true)
 
-        callback(new Error('Not allowed by CORS'));
-    }
-}
-
-app.use(cors(corsOptions));
+//         callback(new Error('Not allowed by CORS'));
+//     }
+// }
+// app.use(cors(corsOptions));
+////////////////////////////////////////////////////////////////////
 
 // Where to look for routes
 app.use(express.static(path.join(__dirname, '../dist/chattr/')));
 
-
-// Connect to sockets
-//sockets.connect(io, PORT);
-//server.listen(http, PORT);
 
 const url = 'mongodb://localhost:27017';
 MongoClient.connect(url, {poolSize:10, useNewUrlParser: true, useUnifiedTopology: true}, function(err, client){
@@ -75,13 +76,4 @@ MongoClient.connect(url, {poolSize:10, useNewUrlParser: true, useUnifiedTopology
         server.listen(http, PORT);
 });
 
-//sockets.connect(io, PORT);
-
-// Start servergit
-//server.listen(http, PORT);
-
-
-// const whitelist = ['http://localhost:4200', 'http://localhost:3000'];
-
-
-//app.use(cors(corsOptions));
+module.exports = app;
