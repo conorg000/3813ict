@@ -1,7 +1,9 @@
 <h1>Live Chat</h1>
 <div>
     <h3>Active</h3>
-    
+    <ul>
+        <li *ngFor="let live of livestatus">{{live}}</li>
+    </ul>
 </div>
 <div>
     <form>

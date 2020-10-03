@@ -19,10 +19,21 @@ export class SocketService {
     this.socket.emit('message', message);
   }
 
+  public sendStatus(username:string):void{
+    this.socket.emit('username', username);
+  }
+
   public onMessage():Observable<any>{
     let observable = new Observable(observer=>{
       this.socket.on('message', (data:string)=> observer.next(data));
     });
     return observable;
+  }
+
+  public onStatus():Observable<any>{
+    let observeStatus = new Observable(observer=>{
+      this.socket.on('username', (data:string)=> observer.next(data));
+    });
+    return observeStatus;
   }
 }
