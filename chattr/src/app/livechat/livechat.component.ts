@@ -45,8 +45,17 @@ export class LivechatComponent implements OnInit {
   }
 
   // Select messages to load
-  //chooseChat(){  
-  //}
+  chooseChat(){
+    for (var i =0; i < this.groups.length; i++){
+      if (this.groups[i].name == this.selectedgroup){
+        for (var j = 0; j < this.groups[i].rooms.length; j++){
+          if (this.groups[i].rooms[j].name == this.selectedroom){
+            this.messages = this.groups[i].rooms[j].chat;
+          }
+        }
+      }
+    }
+  }
 
   private initIoConnection(){
     this.socketService.initSocket();
@@ -60,10 +69,12 @@ export class LivechatComponent implements OnInit {
         this.socketService.sendStatus(this.currentUser.username);
       }
     });
-    // When a message arrive, add it to the array of chat history
+    // When a message arrives, add it to the array of chat history
     this.ioConnection = this.socketService.onMessage().subscribe((message:Message) => {
       // If the room/group matches the current room/group, add it to the array
-      this.messages.push(message);
+      if (message.group == this.selectedgroup && message.room == this.selectedroom){
+        this.messages.push(message);
+      }
     });
   }
 
