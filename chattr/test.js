@@ -61,19 +61,14 @@ describe("Node Server Test", function(){
         });
     });
 
-    // Add Message Tests
-    // Test that empty content is captured
-    describe('/api-addmessage', () => {
-        it('should have status 500 when message has no content', (done) => {
-            chai.request(app)
-                .post('/api/addmessage')
-                .send({})
-                .end((err, res) => {
-                    res.should.have.status(500);
-                    done();
-                });
-        });
-    });
+    // Add User Test
+
+
+    // Delete User Test
+
+
+    // Add User to a Room Test
+
 
     // Get Users Test
     // Test it fetches an array of users and status 200
@@ -164,6 +159,78 @@ describe("Node Server Test", function(){
 
     // Delete Group Test
     // Test it deletes the test group and status 200
+    describe('/api-deletegroup', () => {
+        it('should POST to delete group and give status 200', (done) => {
+            chai.request(app)
+                .post('/api/deletegroup')
+                .send({'group': {'name': 'unit test group'}})
+                .end((err, res) => {
+                    console.log(res.body);
+                    res.should.have.status(200);
+                    done();
+                });
+        });
+    });
+    
+    // Add Room Test
+    // Test it adds room and status 200
+    describe('/api-addroom', () => {
+        it('should POST new room with status 200', (done) => {
+            chai.request(app)
+                .post('/api/addroom')
+                .send({'group':{'name': 'TestGroup', 'rooms': [{'name': 'a'}]},
+                        'newroom': {'name': 'test room'}})
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    //res.body.should.have.property('err', null);
+                    done();
+                });
+        });
+    });
+    // Test it doesn't add duplicate room
+    describe('/api-addroom', () => {
+        it('should fail to POST new room if it exists', (done) => {
+            chai.request(app)
+                .post('/api/addroom')
+                .send({'group':{'name': 'TestGroup', 'rooms': [{'name': 'a'}]},
+                        'newroom': {'name': 'a'}})
+                .end((err, res) => {
+                    res.body.should.have.property('ok', false);
+                    done();
+                });
+        });
+    });
+
+
+    // Delete Room Test
+    // Test it deletes the test room and status 200
+    describe('/api-deleteroom', () => {
+        it('should POST to delete room and give status 200', (done) => {
+            chai.request(app)
+                .post('/api/deleteroom')
+                .send({'group':{'name': 'TestGroup', 'rooms': [{'name': 'a'}, {'name': 'test room'}]},
+                'room': {'name': 'test room'}})
+                .end((err, res) => {
+                    //console.log(res.body);
+                    res.should.have.status(200);
+                    done();
+                });
+        });
+    });
+
+    // Add Message Tests
+    // Test that empty content is captured
+    describe('/api-addmessage', () => {
+        it('should have status 500 when message has no content', (done) => {
+            chai.request(app)
+                .post('/api/addmessage')
+                .send({})
+                .end((err, res) => {
+                    res.should.have.status(500);
+                    done();
+                });
+        });
+    });
 
 });
 
