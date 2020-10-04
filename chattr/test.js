@@ -62,10 +62,54 @@ describe("Node Server Test", function(){
     });
 
     // Add User Test
-
+    // Test it can add user
+    describe('/api-adduser', () => {
+        it('should POST new user with status 200 and err == null', (done) => {
+            chai.request(app)
+                .post('/api/adduser')
+                .send({'email': 'test@gmail.com',
+                    'username': 'testUser',
+                    'id': 99999,
+                    'role': 'user',
+                    'pwd': 'password01'})
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.have.property('err', null);
+                    done();
+                });
+        });
+    });
+    // Test it doesn't add duplicate user
+    describe('/api-adduser', () => {
+        it('should fail to POST new user if it exists', (done) => {
+            chai.request(app)
+                .post('/api/adduser')
+                .send({'email': 'test@gmail.com',
+                    'username': 'testUser',
+                    'id': 99999,
+                    'role': 'user',
+                    'pwd': 'password01'})
+                .end((err, res) => {
+                    res.body.should.have.property('err', 'duplicate item');
+                    done();
+                });
+        });
+    });
 
     // Delete User Test
-
+    // Test it deletes the user and status 200
+    describe('/api-deleteuser', () => {
+        it('should POST to delete user and give status 200', (done) => {
+            chai.request(app)
+                .post('/api/deleteuser')
+                .send({'id': 99999})
+                .end((err, res) => {
+                    //console.log(res.body);
+                    res.should.have.status(200);
+                    done();
+                });
+        });
+    });
 
     // Add User to a Room Test
 
@@ -110,7 +154,7 @@ describe("Node Server Test", function(){
                         'pwd': 'nothing'})
                 .end((err, res) => {
                     res.should.have.status(200);
-                    console.log(res.body);
+                    //console.log(res.body);
                     //res.body.should.be.an.instanceOf(Array);
                     done();
                 });
@@ -165,7 +209,7 @@ describe("Node Server Test", function(){
                 .post('/api/deletegroup')
                 .send({'group': {'name': 'unit test group'}})
                 .end((err, res) => {
-                    console.log(res.body);
+                    //console.log(res.body);
                     res.should.have.status(200);
                     done();
                 });
