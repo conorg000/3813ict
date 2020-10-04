@@ -1,7 +1,3 @@
-const { resolveSoa } = require("dns");
-const fs = require("fs");
-const path = require('path');
-
 module.exports = function(db,app){
     // Route to check user credentials
     app.post('/api/auth', function(req, res){
@@ -18,9 +14,10 @@ module.exports = function(db,app){
         user.username = '';
         user.id = null;
         user.role = '';
+        // Look for user, if doesn't exist, send back object with valid == false
+        // Otherwise, send back user data with valid == true
         collection.find({'username':username, 'pwd':pwd}).count((err,count)=>{
             if (count==0){
-                console.log('bu keyi');
                 user.valid = false;
                 res.send(user);
             }else{
@@ -35,55 +32,5 @@ module.exports = function(db,app){
                 });
             }
         });
-    });
-
-    app.post('/api/userdata', function(req, res){
-        let jsonData = fs.readFileSync(path.join(__dirname, '../database.json'),'utf-8');
-        let database = JSON.parse(jsonData);
-        console.log(req.body.username);
-        // Loop through accounts
-        let userdata = {};
-        for (let i=0; i < database.users.length; i++){
-            if (req.body.username == database.users[i].username){
-                userdata = database.users[i].groups;
-            }
-        }
-        console.log(userdata);
-        res.send(userdata);
-    });
-
-    app.post('/api/groupdata', function(req, res){
-        let jsonData = fs.readFileSync(path.join(__dirname, '../database.json'),'utf-8');
-        let database = JSON.parse(jsonData);
-        // Loop through accounts
-        let groupdata = database.groups;
-        console.log(groupdata);
-        res.send(groupdata);
-    });
-
-    app.post('/api/sendmsg', function(req, res){
-        let jsonData = fs.readFileSync(path.join(__dirname, '../database.json'),'utf-8');
-        let database = JSON.parse(jsonData);
-        let status = {};
-        status.valid = false;
-        // Add message to group message history
-        console.log(req.body.username);
-        console.log(req.body.message);
-        console.log(req.body.group);
-        console.log(req.body.roomname);
-        for (let i=0; i < database.groups.length; i++){
-            if (database.groups[i].groupname == req.body.group){
-                for (let j=0; j < database.groups[i].rooms.length; j++){
-                    if (database.groups[i].rooms[j].roomname == req.body.roomname){
-                        database.groups[i].rooms[j].history.push({"user": req.body.username, "message": req.body.message});
-                        let towrite = JSON.stringify(database);
-                        console.log(towrite);
-                        fs.writeFileSync(path.join(__dirname, '../database.json'), towrite, 'utf-8');
-                        status.valid = true;
-                    }
-                }
-            }
-        }
-        res.send(status);
     });
 }

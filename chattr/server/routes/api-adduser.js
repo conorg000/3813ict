@@ -1,4 +1,5 @@
 module.exports = function(db,app){
+    // Add user to mongo
     app.post('/api/adduser', function(req,res){
         if(!req.body || req.body.email == '' || req.body.id == '' || req.body.username == '' || req.body.role == '' || req.body.pwd == ''){
             return res.sendStatus(400)
@@ -6,6 +7,8 @@ module.exports = function(db,app){
             var user = req.body;
             console.log(user);
             const collection = db.collection('users');
+            // If user exists, send error
+            // Else add to db
             collection.find({'id':user.id}).count((err,count)=>{
                 if (count==0){
                     collection.insertOne(user,(err,dbres)=>{

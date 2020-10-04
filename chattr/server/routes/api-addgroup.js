@@ -1,4 +1,5 @@
 module.exports = function(db,app){
+    // Add group to MongoDB
     app.post('/api/addgroup', function(req,res){
         if(!req.body || req.body.name == ''){
             return res.sendStatus(400)
@@ -6,6 +7,8 @@ module.exports = function(db,app){
             group = req.body;
             console.log(group);
             const collection = db.collection('groups');
+            // If group doesn't already exist, add it
+            // Otherwise, send back error
             collection.find({'name':group.name}).count((err,count)=>{
                 if (count==0){
                     collection.insertOne(group,(err,dbres)=>{

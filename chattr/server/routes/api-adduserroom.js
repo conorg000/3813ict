@@ -1,4 +1,5 @@
 module.exports = function(db,app){
+    // Add user to room
     app.post('/api/adduserroom', function(req,res){
         if(!req.body || req.body.username == ''){
             return res.sendStatus(400)
@@ -9,6 +10,8 @@ module.exports = function(db,app){
             group = req.body.group;
             const collection = db.collection('groups');
             newmembers = [];
+            // If user exists as a roommmember already, send error
+            // Else, add to list of roommmembers
             if (room.roommembers.includes(user)){
                 res.send({'ok':false});
             }else{
@@ -20,5 +23,3 @@ module.exports = function(db,app){
         }
     });
 }
-// db.groups.updateOne({name:'TESTgROUP', "rooms.name": 'a better room'}, {$set:{"rooms.roommembers":['GeorgeCostanza']}})
-// db.groups.updateOne({name:'TESTgROUP', "rooms.name": 'a better room'}, {$push:{"rooms.$.roommembers":'GeorgeCostanza'}})

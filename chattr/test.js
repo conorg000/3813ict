@@ -112,6 +112,18 @@ describe("Node Server Test", function(){
     });
 
     // Add User to a Room Test
+    // Test that empty content is captured
+    describe('/api-adduserroom', () => {
+        it('should have status 400 when body has no content', (done) => {
+            chai.request(app)
+                .post('/api/adduserroom')
+                .send({'username': ''})
+                .end((err, res) => {
+                    res.should.have.status(400);
+                    done();
+                });
+        });
+    });   
 
 
     // Get Users Test

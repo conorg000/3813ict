@@ -1,4 +1,5 @@
 module.exports = function(db,app){
+    // Delete group
     app.post('/api/deletegroup', function(req, res){
         groupname = req.body.group;
         console.log(groupname);

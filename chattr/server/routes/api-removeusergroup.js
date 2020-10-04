@@ -1,23 +1,20 @@
 module.exports = function(db,app){
+    // Remove user from group and any rooms
     app.post('/api/removeusergroup', function(req, res){
         group = req.body.group;
         toremove = req.body.username;
         console.log(group);
-        //console.log(newrooms);
-        //newrooms.remove(roomname);
+        // Remove target user from groupmembers
         newmembers = group.groupmembers.filter(item => item !== toremove);
         console.log(newmembers);
         const collection = db.collection('groups');
         collection.updateOne({'name':group.name}, {$set:{groupmembers:newmembers}},(data)=>{
             console.log(data);
         });
-
-        // Get group.rooms
-        // For each room
+        // For each room in group
         // if username in roommembers
         //      remove from array
         //      updateOne with new array
-        //
         rooms = group.rooms;
         for (var i=0; i < rooms.length; i++){
             if (rooms[i].roommembers.includes(toremove)){

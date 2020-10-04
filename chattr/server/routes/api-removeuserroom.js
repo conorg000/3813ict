@@ -1,9 +1,9 @@
 module.exports = function(db,app){
+    // Remove user from room
     app.post('/api/removeuserroom', function(req, res){
         room = req.body.room;
-        toremove = req.body.username;
-        //console.log(newrooms);
-        //newrooms.remove(roomname);
+        // Remove target user from array of roommmembers
+        // Put new array in db
         newmembers = room.roommembers.filter(item => item !== toremove);
         console.log(newmembers);
         console.log(room.parent);

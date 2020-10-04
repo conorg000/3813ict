@@ -1,4 +1,5 @@
 module.exports = function(db,app){
+    // Add a message to the room chat history
     app.post('/api/addmessage', function(req,res){
         if(!req.body){
             return res.sendStatus(400)
