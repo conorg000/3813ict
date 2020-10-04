@@ -103,10 +103,67 @@ describe("Node Server Test", function(){
         });
     });
 
+    // Update User Test
+    // Test it updates user and status 200
+    describe('/api-updateuser', () => {
+        it('should POST update existing user and return status 200 and an array', (done) => {
+            chai.request(app)
+                .post('/api/updateuser')
+                .send({'email': 'user22@gmail.com',
+                        'username': 'user222',
+                        'role': 'super admin',
+                        'pwd': 'nothing'})
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    console.log(res.body);
+                    //res.body.should.be.an.instanceOf(Array);
+                    done();
+                });
+        });
+    });
+    // Test it fails with status 400 if no body
+    describe('/api-updateuser', () => {
+        it('should fail if any fields are missing', (done) => {
+            chai.request(app)
+                .post('/api/updateuser')
+                .send({'email': ''})
+                .end((err, res) => {
+                    res.should.have.status(400);
+                    done();
+                });
+        });
+    });
+
+    // Add Group Test
+    // Test it adds group and status 200
+    describe('/api-addgroup', () => {
+        it('should POST new group with status 200 and err == null', (done) => {
+            chai.request(app)
+                .post('/api/addgroup')
+                .send({'name': 'unit test group'})
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.have.property('err', null);
+                    done();
+                });
+        });
+    });
+    // Test it doesn't add duplicate group
+    describe('/api-addgroup', () => {
+        it('should fail to POST new group if it exists', (done) => {
+            chai.request(app)
+                .post('/api/addgroup')
+                .send({'name': 'TestGroup'})
+                .end((err, res) => {
+                    res.body.should.have.property('err', 'duplicate item');
+                    done();
+                });
+        });
+    });
 
 
-
+    // Delete Group Test
+    // Test it deletes the test group and status 200
 
 });
 
-    // add tests
