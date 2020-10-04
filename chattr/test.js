@@ -75,6 +75,36 @@ describe("Node Server Test", function(){
         });
     });
 
+    // Get Users Test
+    // Test it fetches an array of users and status 200
+    describe('/api-getusers', () => {
+        it('should GET array of users and have status 200', (done) => {
+            chai.request(app)
+                .get('/api/getusers')
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.an.instanceOf(Array);
+                    done();
+                });
+        });
+    });
+
+    // Get Groups Test
+    // Test it fetches an array of groups and status 200
+    describe('/api-getgroups', () => {
+        it('should GET array of groups and have status 200', (done) => {
+            chai.request(app)
+                .get('/api/getgroups')
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.an.instanceOf(Array);
+                    done();
+                });
+        });
+    });
+
+
+
 
 
 });
