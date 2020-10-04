@@ -20,9 +20,10 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
+  // When login form submitted, wait for response from server
+  // If valid field is true, then store logged in user as currentUser and reroute to chat
+  // Else, alert that name/pwd is wrong
   itemClicked() {
-    //console.log(this.email);
-    //let data = this.http.post<User>('http://localhost:3000/api/auth', { email: this.userEmail, pwd: this.userPw });
     console.log(this.username);
     console.log(this.pwd);
     this.authservice.login(this.username, this.pwd).subscribe(

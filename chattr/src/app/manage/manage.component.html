@@ -116,7 +116,6 @@
                             </ul>
                         </td>
                         <td><button *ngIf="(currentUser.role == 'group admin')||(currentUser.role == 'super admin')" (click)="deleteGroup(group)" class="btn btn-danger">Delete</button></td>
-                        <td><button *ngIf="(currentUser.role == 'group admin')||(currentUser.role == 'super admin')" (click)="editGroup(group)" class="btn btn-danger">Edit</button></td>
                         <td>
                             <form *ngIf="(currentUser.role == 'group admin')||(currentUser.role == 'super admin')" (submit)="addGroupAssis(group)">
                                 <div>

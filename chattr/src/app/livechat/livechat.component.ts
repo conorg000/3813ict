@@ -16,7 +16,6 @@ import { AuthService } from '../services/auth.service';
 })
 export class LivechatComponent implements OnInit {
   messagecontent:string="";
-  // Initialise this to the room's chat history
   messages:Message[] = [];
   livestatus:string[] = [];
   ioConnection:any;
@@ -25,13 +24,12 @@ export class LivechatComponent implements OnInit {
   groups:Group[] = [];
   selectedgroup:string = '';
   selectedroom:string = '';
-  //rooms:Room[] = [];
-  group:string = 'testgroup';
-  room:string = 'test room';
   msgtosend:Message;
 
   constructor(private socketService:SocketService, private router:Router, private authservice:AuthService) { }
 
+  // On load get current user. start sockets connection, get groups data
+  // Else if user not logged in re-route to login
   ngOnInit(){
     try {
       this.currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
@@ -45,6 +43,8 @@ export class LivechatComponent implements OnInit {
   }
 
   // Select messages to load
+  // User chooses group and room combo from form
+  // Retrieve corresponding chat history and set as messages array
   chooseChat(){
     for (var i =0; i < this.groups.length; i++){
       if (this.groups[i].name == this.selectedgroup){
@@ -57,6 +57,7 @@ export class LivechatComponent implements OnInit {
     }
   }
 
+  // Sockets initialisation
   private initIoConnection(){
     this.socketService.initSocket();
     // Send the current username to other sockets upon connection to share the live status
@@ -78,8 +79,9 @@ export class LivechatComponent implements OnInit {
     });
   }
 
+  // Send a message via sockets
+  // Creates Message class, adds it to MongoDB chat history, then sends it via sockets
   chat(messagecontent){
-    //this.socketService.addMessage(this.msgtosend);
     if(this.messagecontent){
       this.time = new Date().toLocaleString();
       this.msgtosend = new Message(this.currentUser.username, this.time, this.messagecontent, this.selectedgroup, this.selectedroom);
@@ -105,7 +107,6 @@ export class LivechatComponent implements OnInit {
     this.authservice.getGroups().subscribe(data=>{
       this.groups = data;
     });
-    //this.groups = this.groups.filter(item => item.groupmembers.includes(this.currentUser.username));
   }
 
 

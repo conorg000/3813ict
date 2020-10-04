@@ -32,6 +32,9 @@ export class ManageComponent implements OnInit {
   users: User[];
   groups:Group[];
 
+  // On load, try getting currentUser from local storage
+  // Also get groups and users data
+  // Else redirect to login page
   ngOnInit() {
     try {
       this.currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
@@ -53,7 +56,7 @@ export class ManageComponent implements OnInit {
     })
   }
 
-  // Delete user from DB
+  // Delete user from DB when button pressed
   deleteUser(user:User){
     console.log('Deleting User with id ' + user.id);
     this.authservice.deleteUser(user).subscribe((data)=>{
@@ -69,14 +72,12 @@ export class ManageComponent implements OnInit {
     this.router.navigate(['update']);
   }
 
-  // Consider adding this to template
-  // (ngModelChange)="checkvalidid($event)"
-  // Add a new user to the database
+  // Add a new user to the database when form submitted
+  // Then reset the variables used in form
   addnewUser(event){
     event.preventDefault();
     this.newuser = new User(this.useremail, this.username, this.userrole, this.userid, this.userpwd, this.uservalid);
     this.authservice.addUser(this.newuser).subscribe((data)=>{
-      console.log(data);
       if(data.err == null){
         console.log('Added, all good');
       }
@@ -91,7 +92,7 @@ export class ManageComponent implements OnInit {
 
 
   // Group/channel functions
-  
+
   // Retrieve groups and rooms
   getGroups(): void{
     this.authservice.getGroups().subscribe(data=>{
@@ -99,12 +100,11 @@ export class ManageComponent implements OnInit {
     })
   }
 
-  // Add new group
+  // Add new group when form is submitted
   addnewGroup(event){
     event.preventDefault();
     this.newgroup = new Group(this.groupname);
     this.authservice.addGroup(this.newgroup).subscribe((data)=>{
-      console.log(data);
       if(data.err == null){
         console.log("added group");
       }
@@ -112,11 +112,8 @@ export class ManageComponent implements OnInit {
     });
   }
 
-  // Add room
+  // Add room when form is submitted
   addnewRoom(group:Group){
-    console.log(group.name);
-    console.log(group.rooms);
-    console.log(this.newroom);
     this.newroom = new Room(this.newroomname, group.name);
     this.authservice.addRoom(group, this.newroom).subscribe((data)=>{
       console.log(data);
@@ -128,7 +125,7 @@ export class ManageComponent implements OnInit {
     });
   }
 
-  // Delete group
+  // Delete group when button pressed
   deleteGroup(group:Group){
     console.log('Deleting group with name ' + group.name);
     this.authservice.deleteGroup(group).subscribe((data)=>{
@@ -136,16 +133,11 @@ export class ManageComponent implements OnInit {
     });
   }
 
-  // Delete room
+  // Delete room when button pressed
   deleteRoom(group:Group, room:Room){
     this.authservice.deleteRoom(group, room).subscribe((data)=>{
       console.log(data);
     })
-  }
-
-  // Edit group
-  editGroup(event){
-
   }
 
   // Add a user to a group
@@ -160,6 +152,7 @@ export class ManageComponent implements OnInit {
     });
   }
 
+  // Remove user from group when form submitted
   removeUserGroup(group:Group){
     this.authservice.removeUserGroup(group, this.selecteduser).subscribe((data)=>{
       console.log(data);
@@ -179,6 +172,7 @@ export class ManageComponent implements OnInit {
     });
   }
 
+  // Remove a user from room
   removeUserRoom(room:Room){
     this.authservice.removeUserRoom(room, this.selecteduser).subscribe((data)=>{
       console.log(data);
@@ -195,11 +189,11 @@ export class ManageComponent implements OnInit {
     this.selectedgroupassis = "";
   }
 
+  // Remove an existing group assistant from the role
   removeGroupAssis(group:Group){
     this.authservice.removeGroupAssis(group, this.selectedgroupassis).subscribe((data)=>{
       console.log(data);
     });
     this.selectedgroupassis = "";
   }
-
 }
