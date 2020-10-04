@@ -6,9 +6,7 @@
     <ul class="nav navbar-nav">
       <li *ngIf="username != ''; else other_content"><button (click) = signOut()>Log Out</button></li>
       <ng-template #other_content><a class="nav-link" routerLink="/login">Login</a></ng-template>
-      <li><a class="nav-link" routerLink="/chat">Chat</a></li>
-      <li><a class="nav-link" routerLink="/account">Account</a></li>
-      <li><a class="nav-link" routerLink="/livechat">Live Chat (uses Sockets)</a></li>
+      <li><a class="nav-link" routerLink="/livechat">Chat</a></li>
       <li><a class="nav-link" routerLink="/manage">Manage</a></li>
     </ul>
   </div>

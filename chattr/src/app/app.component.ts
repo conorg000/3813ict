@@ -16,6 +16,8 @@ export class AppComponent implements OnInit {
   constructor(private router: Router, private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
+    // Try getting current user from local storage, then set local variables with data
+    // Otherwise user is not logged in
     try {
       this.currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
       if(this.currentUser){
@@ -26,10 +28,6 @@ export class AppComponent implements OnInit {
     catch(err){
       console.log("Not logged in");
     }
-  }
-
-  ngOnChanges() {
-    
   }
 
   signOut(){

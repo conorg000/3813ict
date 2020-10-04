@@ -10,16 +10,14 @@ const io = require('socket.io')(http);
 const sockets = require('./socket.js');
 const server = require('./listen.js');
 const PORT = 3000;
-// To parse JSON data
 app.use(bodyParser.json());
 
-
+// CORS options
 app.use(function(req, res, next) {
      res.header("Access-Control-Allow-Origin", '*'); 
      res.header("Access-Control-Allow-Credentials", true);
      res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
      res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json,Authorization,text/plain,*/*, other_header');
-    // res.header("Access-Control-Expose-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json,Authorization,text/plain,*/*, other_header');
      next();
 });
 
@@ -27,23 +25,24 @@ app.use(function(req, res, next) {
 /// Comment out corsOptions to undertake unit tests (test.js)    ///
 /// Uncomment for production                                     ///
 ////////////////////////////////////////////////////////////////////
-// const whitelist = ['http://localhost:4200', 'http://localhost:3000'];
-// const corsOptions = {
-//     credentials: true, // This is important.
-//     origin: (origin, callback) => {
-//         if(whitelist.includes(origin))
-//             return callback(null, true)
+const whitelist = ['http://localhost:4200', 'http://localhost:3000'];
+const corsOptions = {
+    credentials: true, // This is important.
+    origin: (origin, callback) => {
+        if(whitelist.includes(origin))
+            return callback(null, true)
 
-//         callback(new Error('Not allowed by CORS'));
-//     }
-// }
-// app.use(cors(corsOptions));
+        callback(new Error('Not allowed by CORS'));
+    }
+}
+app.use(cors(corsOptions));
 ////////////////////////////////////////////////////////////////////
 
 // Where to look for routes
 app.use(express.static(path.join(__dirname, '../dist/chattr/')));
 
-
+// Setup connection to MongoClient and sockets
+// Detail all routes
 const url = 'mongodb://localhost:27017';
 MongoClient.connect(url, {poolSize:10, useNewUrlParser: true, useUnifiedTopology: true}, function(err, client){
     if (err) {return console.log(err)}
@@ -66,11 +65,8 @@ MongoClient.connect(url, {poolSize:10, useNewUrlParser: true, useUnifiedTopology
         require('./routes/api-addgroupassis.js')(db,app,path);
         require('./routes/api-removegroupassis.js')(db,app,path);
         require('./routes/api-addmessage.js')(db,app,path);
-        // require('./routes/api-getitem.js')(db,app,ObjectID);
-        // require('./routes/api-update.js')(db,app,ObjectID);
-        // require('./routes/api-deleteitem.js')(db,app,ObjectID);
-        // require('./routes/api-prodcount.js')(db,app,path);
-        // require('./routes/api-validid.js')(db,app,ObjectID);
+        
+        // Connect to sockets
         sockets.connect(io, PORT);
         
         server.listen(http, PORT);

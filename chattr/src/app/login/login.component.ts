@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
           this.newuser = new User(data.email, data.username, data.role, data.id, '', data.valid);
           //console.log(data);
           sessionStorage.setItem('currentUser', JSON.stringify(this.newuser));
-          this.router.navigate(['/account']);
+          this.router.navigate(['/livechat']);
         }
         else{
           alert("Error: incorrect email or password");

@@ -1,4 +1,5 @@
 export class User {
+    // User class
     // id and username are unique identifiers
     email:string;
     username:string;

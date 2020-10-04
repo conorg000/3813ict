@@ -1,6 +1,5 @@
-import { Time } from '@angular/common';
-
 export class Message {
+    // Message class
     user:string;
     time:string;
     content:string;
