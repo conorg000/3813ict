@@ -31,109 +31,52 @@ All of the routes do basic value checking i.e. if the body of a request is empty
 
 | Route endpoint  | Description |
 | ------------- | ------------- |
-| /api/auth | This POST route manages the login authentication system. It determines whether or not a login attempt is allowed or not.
-- Parameters: username (string), pwd (string)
-- Returns: if successful, returns a User object with the “valid” field set to true. If unsuccessful, it returns a User object with the “valid” field set to false. |
-| /api/addgroup | This POST route adds a new Group class to the MongoDB. It checks to see if the Group already exists or not. It uses the insertOne() MongoDB operation.
-- Parameters: group (Group class)
-- Returns: if successful, returns an object with the “err” field set to null. If unsuccessful because there is a duplicate group, it returns an object with the err field set to “duplicate item”. |
+| /api/auth | This POST route manages the login authentication system. It determines whether or not a login attempt is allowed or not. **Parameters**: username (string), pwd (string). **Returns**: if successful, returns a User object with the “valid” field set to true. If unsuccessful, it returns a User object with the “valid” field set to false. |
+| /api/addgroup | This POST route adds a new Group class to the MongoDB. It checks to see if the Group already exists or not. It uses the insertOne() MongoDB operation. **Parameters**: group (Group class). **Returns**: if successful, returns an object with the “err” field set to null. If unsuccessful because there is a duplicate group, it returns an object with the err field set to “duplicate item”. |
+| /api/addgroupassis | This route adds a user as a group assistant for a group. It uses the updateOne() MongoDB operation. **Parameters**: group (Group class), groupassis (string of the username). **Returns**: if successful, returns the MongoDB return value. If unsuccessful because the user is already a group assistant, it returns an object with the “ok” field set to false. |
+| /api/addmessage | This route adds a new Message to a Room’s chat history. It uses the updateOne() operation. **Parameters**: message (Message class). **Returns**: returns the MongoDB return value. |
+| /api/addroom | This route adds a Room class to a Group’s list of rooms. It uses the updateOne() operation. **Parameters**: group (Group class), room (Room class). **Returns**: if successful, returns the MongoDB return value. If unsuccessful because the room already exists for the group, it returns an object with the “ok” field set to false. |
+| /api/adduser | This route adds a new User class to the MongoDB users collection. It uses the insertOne() operation. **Parameters**: user (User class). **Returns**: if successful, returns an object with the “err” field set to null. If unsuccessful because there is a duplicate user, it returns an object with the err field set to “duplicate item”. |
+| /api/addusergroup | This route adds a user to a group as part of its list of group members. **Parameters**: group (Group), username (string). **Returns**: if successful, returns the MongoDB return value. If unsuccessful because the user already exists for the group, it returns an object with the “ok” field set to false. |
+| /api/adduserroom | This route adds a user to a room as part of its list of room members. **Parameters**: room (Room), username (string). **Returns**: if successful, returns the MongoDB return value. If unsuccessful because the user already exists for the room, it returns an object with the “ok” field set to false. |
+| /api/deletegroup | This route deletes a group from the groups collection in MongoDB. It uses the deleteOne() operation. **Parameters**: group (Group). **Returns**: if successful, returns the MongoDB return value. |
+| /api/deleteroom | This route deletes a room from a group in MongoDB. **Parameters**: group (Group). **Returns**: if successful, returns the MongoDB return value. |
+| /api/deleteuser | This route deletes a user from the users collection in MongoDB. **Parameters**: user (User). **Returns**: if successful, returns the MongoDB return value. |
+| /api/getgroups | This GET route retrieves all groups from the groups collection in MongoDB. **Parameters**: none. **Returns**: an array of Group classes. |
+| /api/getusers | This GET route retrieves all users from the users collection in MongoDB. **Parameters**: none. **Returns**: an array of User classes. |
+| /api/removegroupassis | This POST route removes a group assistant from the list of group assistants for a group. **Parameters**: group (Group), groupassis (string). **Returns**: if successful, returns the MongoDB return value. |
+| /api/removeusergroup | This POST route removes a user from a group and its associated rooms. **Parameters**: group (Group), username (string). **Returns**: if successful, returns the MongoDB return value. |
+| /api/removeuserroom | This POST route removes a user from a room. **Parameters**: room (Room), username (string). **Returns**: if successful, returns the MongoDB return value. |
+| /api/updateuser | This POST route updates the details for a user. **Parameters**: user (User). **Returns**:  if successful, returns the MongoDB return value. |
 
-/api/addgroupassis
-This route adds a user as a group assistant for a group. It uses the updateOne() MongoDB operation.
-Parameters: group (Group class), groupassis (string of the username)
-Returns: if successful, returns the MongoDB return value. If unsuccessful because the user is already a group assistant, it returns an object with the “ok” field set to false.
-/api/addmessage
-This route adds a new Message to a Room’s chat history. It uses the updateOne() operation.
-Parameters: message (Message class)
-Returns: returns the MongoDB return value.
-/api/addroom
-This route adds a Room class to a Group’s list of rooms. It uses the updateOne() operation.
-Parameters: group (Group class), room (Room class)
-Returns: if successful, returns the MongoDB return value. If unsuccessful because the room already exists for the group, it returns an object with the “ok” field set to false.
-/api/adduser
-This route adds a new User class to the MongoDB users collection. It uses the insertOne() operation.
-Parameters: user (User class)
-Returns: if successful, returns an object with the “err” field set to null. If unsuccessful because there is a duplicate user, it returns an object with the err field set to “duplicate item”.
-/api/addusergroup
-This route adds a user to a group as part of its list of group members.
-Parameters: group (Group), username (string)
-Returns: if successful, returns the MongoDB return value. If unsuccessful because the user already exists for the group, it returns an object with the “ok” field set to false.
-/api/adduserroom
-This route adds a user to a room as part of its list of room members.
-Parameters: room (Room), username (string)
-Returns: if successful, returns the MongoDB return value. If unsuccessful because the user already exists for the room, it returns an object with the “ok” field set to false.
-/api/deletegroup
-This route deletes a group from the groups collection in MongoDB. It uses the deleteOne() operation.
-Parameters: group (Group)
-Returns: if successful, returns the MongoDB return value.
-/api/deleteroom
-This route deletes a room from a group in MongoDB.
-Parameters: group (Group)
-Returns: if successful, returns the MongoDB return value.
-/api/deleteuser
-This route deletes a user from the users collection in MongoDB.
-Parameters: user (User)
-Returns: if successful, returns the MongoDB return value.
-/api/getgroups
-This GET route retrieves all groups from the groups collection in MongoDB.
-Parameters: none
-Returns: an array of Group classes.
-/api/getusers
-This GET route retrieves all users from the users collection in MongoDB.
-Parameters: none
-Returns: an array of User classes.
-/api/removegroupassis
-This POST route removes a group assistant from the list of group assistants for a group.
-Parameters: group (Group), groupassis (string)
-Returns: if successful, returns the MongoDB return value.
-/api/removeusergroup
-This POST route removes a user from a group and its associated rooms.
-Parameters: group (Group), username (string)
-Returns: if successful, returns the MongoDB return value.
-/api/removeuserroom
-This POST route removes a user from a room.
-Parameters: room (Room), username (string)
-Returns: if successful, returns the MongoDB return value.
-/api/updateuser
-This POST route updates the details for a user.
-Parameters: user (User)
-Returns:  if successful, returns the MongoDB return value
 
+## Angular architecture 
 
 ### Components
-Three components were created: Account, Chat, Login.
+Four components were created to manage user interactions on the front-end: Login, Manage, Update, Livechat.
 
-The Chat component was designed to host the communications for a group’s room. For the given user, it fetches the groups that the user is a part of and the rooms that they’ve joined. With those details displayed, it allows the user to choose a room and view the chat. It communicates with the AuthService. On initialisation, if a user is logged in, it calls the userGroups and groupData functions and routes to retrieve data on the current user’s group and rooms. When a room is selected and clicked, the seeChat function fires. This then displays the chat history for the selected room. If the user wants to send a message, the submit button triggers the sendMsg function which ends up writing the new message to the JSON file.
+**Login**: this component exists at the “/login” path and it handles authentication. Through the “login.component.html” template, it provides a form for the user to enter their details and then logs the user in if the details are correct. When a user submits their details, the itemClicked() function is triggered. This function exists in “login.component.ts” and calls the AuthService login() function, which calls the “/api/auth” endpoint to verify if the user exists or not. If the user doesn’t exist, an alert appears in the browser. If the user does exist, the user’s details are then saved into local sessionStorage by the itemClicked() function.
 
-The Login component handles authentication. It provides a form for the user to enter their details and then logs the user in if the details are correct. It communicates with the AuthService. When a user submits their details, the itemClicked function is triggered. This verifies if the user exists or not.
+**Manage**: this component exists at the “/manage” path and handles most of the web app’s CRUD operations. Depending on a user’s “role” (superadmin, groupadmin, groupassis), different operations can be performed. In the Manage component, there is a list of users, and it’s possible to create, update and delete users. There is a list of groups, and it’s possible to create, update and delete groups. Users can be added or removed from groups and rooms. Rooms can be added or removed from groups. Users in a group can be appointed as group assistants too. These options are made available through forms in the “manage.component.html” template. Submitting a form triggers a function in “manage.component.ts”, which calls a function in AuthService. These functions then make API calls to the various routes listed earlier in the report. Upon initialisation, the Manage component tries to retrieve the “current user” from session storage. This determines which view of forms should be displayed, based on the user’s role and their permissions. Various Angular templating statements are used to make the view dynamic. If a user is not logged in, then the component redirects them to the “/login” route.
 
-The Account component was designed to be a place for users to edit their details, and for admins to edit users and groups. Unfortunately, this didn’t get completed in this phase of the assignment. The plan would be to have a form which allows the administrator to add/remove users to/from groups and rooms. The new configuration would then be saved to the “database.json”.
+**Update**: this component exists at the “/update” path and provides a way to edit a user’s details. Everything about the user can be edited, except for their unique ID. To access the page, a superadmin has to click the “Edit” button on a user’s profile from the Manage page. On the template side, “update.component.html” provides a form pre-filled with the selected user’s details (which have been stored in localStorage). The details can be changed and then the submitted form triggers a function called editUser() in “update.component.ts” which calls the API via AuthService. Submitting the form redirects the user to the “/manage” route.
 
-### Services and Routes
-The AuthService acts as a gateway to the key API routes used by the various components. It contains four routes:
-- http://localhost:3000/api/auth for the login function
-- http://localhost:3000/api/userdata for the userData function
-- http://localhost:3000/api/groupdata for the groupData function
-- http://localhost:3000/api/sendmsg for the sendMsg function
+**Livechat**: this component exists at the “/livechat” path and provides a place for users to see groups and rooms they belong to, and engage in live chat with other members. Upon loading the page, the SocketService is called to initialise a socket connection on the server side. The template, “livechat.component.html”, features a small form where the user can choose a group they belong to and then choose a room they belong to in the group. By submitting the form, a function in “livechat.component.ts” calls the API and returns the chat history for that room. A user can then use another form to send messages to the room chat, using sockets. This component uses a separate SocketService to manage its interactions with the API and the sockets service. The socket connection means that new messages come in real time.
 
-## Node Server Architecture
+### Services
+The benefit of using an Angular service is that all of the functions which interface with the API are stored in one spot. It also makes it easy to call the same functions from different components. Two services were used in the project: AuthService and SocketService.
 
-### Modules and Functions
-In the api-login.js file, there is a post function for each API route in the AuthService. 
-- “/api/auth” is an authentication procedure called by the Login component. It loops through the existing users in “database.json” to see if any of the user objects match the submitted email and password combination.
-- “/api/userdata” is a method which retrieves the group data for a logged in user (which groups they are signed up for, and which rooms).
-- “/api/groupdata” is a method which retrieves all the group information and room chat history.
-- “/api/sendmsg” is a method which adds a message object to the existing chat history for a room. It takes the submitted message and the sender’s username and pushes them to the array of messages in the “database.json”.
+**AuthService**: this service handles the majority of data-related functions. There are 16 functions which refer to 16 of the API endpoints, allowing for a variety of CRUD operations on Users, Groups and Rooms. There is also a login function to handle authentication.
 
-Modules used in server.js on the server side include Express, Body Parser, Path, Http, and Cors.
+**SocketService**: this service is reserved for the Livechat component, which uses functions to interact with the socket connection. The initSocket() function starts the socket connection on the server side. There are then two functions, onMessage() and onStatus() which use Observables to constantly poll the socket connection and bring in any new data. The functions send() and sendStatus() send data from the user side to the other socket connections. There is also a standard API call which adds messages to MongoDB.
 
-### Files
-There is a single file containing all of the initial serialised JSON data, “database.json”. The JSON file is read by API routes and then parsed to load the necessary data. If changes are made which require updating the data, the changes are made and then saved over the existing file.
+### Models
+Four models were created to handle the main data structures, as indicated earlier. The models are “user.ts” (containing the User class), “group.ts” (containing the Group class), “room.ts” (containing the Room class), and “message.ts” (containing the Message class).
 
-## Client-server Architecture
-The responsibilities of both the client and the server are divided in such a way so as to let the server handle the update and retrieval of data, while the client acts as the portal through which requests go to the server. More specifically, the client contains functions which interface with the application’s front-end. Certain actions trigger functions, which are then redirected via the AuthService to their respective routes on the back-end. The back-end, or server, contains logic which returns the data requested by the client.
 
-## Client-server interaction
-As described earlier, actions triggered on the client side lead the server to supply, modify or update the data. This happens by reading and writing to the serialised JSON file “database.json” with functions like 
+
+## Client-server architecture
+The responsibilities of both the client and the server are divided in such a way so as to let the server handle the update and retrieval of data, while the client acts as the portal through which requests go to the server. More specifically, the client contains functions which interface with the application’s front-end. Certain actions trigger functions, which are then redirected via the AuthService to their respective routes on the back-end. The back-end, or server, contains logic which interacts with the MongoDB database and returns the data requested by the client.
 
 Angular components are updated by having their values bound to values variables within the respective component. In input forms, for example, the “banana in a box” notation is used to link field values to variables, which can then pass on the input. Likewise, to display a variable in the HTML front-end, curly braces are used to embed the updateable variable in the web page.
+
