@@ -174,6 +174,8 @@ export class ManageComponent implements OnInit {
 
   // Remove a user from room
   removeUserRoom(room:Room){
+    console.log(room);
+    console.log(this.selecteduser);
     this.authservice.removeUserRoom(room, this.selecteduser).subscribe((data)=>{
       console.log(data);
     });

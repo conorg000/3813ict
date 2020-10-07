@@ -10,7 +10,7 @@ module.exports = function(db,app){
         console.log(newgroupassis);
         const collection = db.collection('groups');
         collection.updateOne({'name':group.name}, {$set:{groupassis:newgroupassis}},(data)=>{
-            console.log(data);
+            res.send(data);
         });
     });
 }

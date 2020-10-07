@@ -9,7 +9,7 @@ module.exports = function(db,app){
         console.log(newmembers);
         const collection = db.collection('groups');
         collection.updateOne({'name':group.name}, {$set:{groupmembers:newmembers}},(data)=>{
-            console.log(data);
+            res.send(data);
         });
         // For each room in group
         // if username in roommembers
@@ -20,7 +20,7 @@ module.exports = function(db,app){
             if (rooms[i].roommembers.includes(toremove)){
                 newmembers = rooms[i].roommembers.filter(item => item !== toremove);
                 collection.updateOne({'name':rooms[i].parent, 'rooms.name':rooms[i].name}, {$set:{'rooms.$.roommembers':newmembers}}, (data)=>{
-                    console.log(data);
+                    res.send(data);
                 });
             }
         }
