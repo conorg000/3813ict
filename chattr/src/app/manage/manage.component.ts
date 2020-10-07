@@ -27,6 +27,7 @@ export class ManageComponent implements OnInit {
   newroomname:string="";
   newroom:Room;
   selectedgroupassis:string="";
+  maxid:number=0;
 
   constructor(private authservice:AuthService, private router:Router) { }
   users: User[];
@@ -53,12 +54,21 @@ export class ManageComponent implements OnInit {
   getUsers(): void{
     this.authservice.getUsers().subscribe(data=>{
       this.users = data;
-    })
+      for (var i = 0; i < this.users.length; i++){
+        if (this.users[i].id >= this.maxid){
+          this.maxid = this.users[i].id;
+        }
+      }
+      this.maxid = this.maxid + 1;
+      console.log(this.maxid);
+    });
   }
 
   // Delete user from DB when button pressed
   deleteUser(user:User){
     console.log('Deleting User with id ' + user.id);
+
+
     this.authservice.deleteUser(user).subscribe((data)=>{
       console.log(data);
     });
@@ -76,7 +86,8 @@ export class ManageComponent implements OnInit {
   // Then reset the variables used in form
   addnewUser(event){
     event.preventDefault();
-    this.newuser = new User(this.useremail, this.username, this.userrole, this.userid, this.userpwd, this.uservalid);
+
+    this.newuser = new User(this.useremail, this.username, this.userrole, this.maxid, this.userpwd, this.uservalid);
     this.authservice.addUser(this.newuser).subscribe((data)=>{
       if(data.err == null){
         console.log('Added, all good');
@@ -88,6 +99,7 @@ export class ManageComponent implements OnInit {
       this.userpwd = "";
       this.uservalid = null;
     });
+    window.location.reload();
   }
 
 
@@ -109,6 +121,7 @@ export class ManageComponent implements OnInit {
         console.log("added group");
       }
       this.groupname = "";
+      window.location.reload();
     });
   }
 
@@ -122,6 +135,7 @@ export class ManageComponent implements OnInit {
       }
       this.newroomname = "";
       this.newroom = null;
+      window.location.reload();
     });
   }
 
