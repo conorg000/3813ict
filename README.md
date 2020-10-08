@@ -74,9 +74,12 @@ The benefit of using an Angular service is that all of the functions which inter
 Four models were created to handle the main data structures, as indicated earlier. The models are “user.ts” (containing the User class), “group.ts” (containing the Group class), “room.ts” (containing the Room class), and “message.ts” (containing the Message class).
 
 
-
 ## Client-server architecture
 The responsibilities of both the client and the server are divided in such a way so as to let the server handle the update and retrieval of data, while the client acts as the portal through which requests go to the server. More specifically, the client contains functions which interface with the application’s front-end. Certain actions trigger functions, which are then redirected via the AuthService to their respective routes on the back-end. The back-end, or server, contains logic which interacts with the MongoDB database and returns the data requested by the client.
 
 Angular components are updated by having their values bound to values variables within the respective component. In input forms, for example, the “banana in a box” notation is used to link field values to variables, which can then pass on the input. Likewise, to display a variable in the HTML front-end, curly braces are used to embed the updateable variable in the web page.
 
+## Unit tests
+Unit tests are provided for the routes on the server side. In total there are 18 tests, testing 75% of the back-end routes.
+
+**Before running tests, disable CORS settings in `server.js`**. Run the unit tests with `npm test`.
